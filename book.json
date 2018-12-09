@@ -32,8 +32,8 @@
 			"associatedWithSummary": true
 		},
 		"favicon":{
-			"shortcut": "assets/favicon.ico",
-			"bookmark": "assets/favicon.ico",
+			"shortcut": "assets/images/favicon.ico",
+			"bookmark": "assets/images/favicon.ico",
 			"appleTouch": "assets/images/apple-touch-icon.png",
 			"appleTouchMore": {
 				"120x120": "assets/images/apple-touch-icon-120x120.png",
