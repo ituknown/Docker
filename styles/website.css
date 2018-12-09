@@ -1,0 +1,33 @@
+/* CSS for website */
+
+
+/* summmary style */
+.book-summary ul.summary li.header {
+	font-weight: bolder;
+}
+
+.book-summary ul.summary li a{
+	text-indent: 1em;
+}
+
+.book-summary ul.summary li a:hover{
+	color: #008cff;
+}
+
+
+/* video.js style*/
+.video-js {
+	width:100%;
+	height: 100%;
+}
+
+
+/* content h2~5 style */
+.markdown-section h2,
+.markdown-section h3,
+.markdown-section h4,
+.markdown-section h5 {
+    padding-bottom: 0.3em;
+    border-bottom: 1px solid #eee;
+    font-family: "Times New Roman",Georgia,serif;
+}
