@@ -23,9 +23,9 @@
 
 ### 原理篇
 
-* [图解镜像 & 容器](docs/theory/diagrammatize-image-container.md)
-  + [英文版](docs/theory/diagrammatize-image-container-en.md)
-  + [译文版](docs/theory/diagrammatize-image-container-cn.md)
+* [图解镜像 & 容器](docs/theory/visualizing-container-images.md)
+  + [英文版](docs/theory/visualizing-container-images-en.md)
+  + [译文版](docs/theory/visualizing-container-images-cn.md)
 
 ---
 
