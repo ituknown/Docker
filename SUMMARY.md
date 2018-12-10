@@ -10,7 +10,6 @@
   + [Docker EE](docs/introduction/install-docker-ee.md)
 * [Docker Hub](docs/introduction/docker-hub.md)
 * [命令篇](docs/introduction/command.md)
-* [图解镜像 & 容器](docs/introduction/image-container-map.md)
 
 ---
 
@@ -24,8 +23,13 @@
 
 ### 原理篇
 
+* [图解镜像 & 容器](docs/theory/diagrammatize-image-container.md)
+  + [英文版](docs/theory/diagrammatize-image-container-en.md)
+  + [译文版](docs/theory/diagrammatize-image-container-cn.md)
+
 ---
 
 ## 附录篇
 
 * [附录一：资源链接](docs/appendix/resource-link.md)
+* [附录二：常见问题](docs/appendix/FAQ.md)
