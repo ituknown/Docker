@@ -5,6 +5,7 @@
 ### 初识篇
 
 * [Docker 简介](docs/introduction/README.md)
+* [Docker vs VM](docs/introduction/Docker-VM.md)
 * [Docker 安装](docs/introduction/install-docker.md)
   + [Docker CE](docs/introduction/install-docker-ce.md)
   + [Docker EE](docs/introduction/install-docker-ee.md)
