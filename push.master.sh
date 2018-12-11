@@ -8,10 +8,25 @@
 # execute the following command to give the user permission:
 # the command is: `chmod u+x push.master.sh`
 
+# Note, if you alread existing git repository, but remote is origin. And you want
+# rename remote, you can execute following command to rename:
+# the command is: `git remote rename origin old-origin`
+
 #-------------------------------------------------------------------------------
 # git push code to github remote and if you repository need have `github` remote
+# Not: if you want associating git repositories, you need need execute following
+# command:
+# the command is: `git remote add github git@github.com:<your-repository>.git`
+# Warning, you should not execute `git push -u <remote> <branch>`
+
 git push github master
+
 
 #-------------------------------------------------------------------------------
 # git push code to gitlab remote and if you repository need have `github` remote
+# Not: if you want associating git repositories, you need need execute following
+# command:
+# the command is: `git remote add github git@github.com:<your-repository>.git`
+# Warning, you should not execute `git push -u <remote> <branch>`
+
 git push gitlab master
