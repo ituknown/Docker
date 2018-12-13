@@ -42,3 +42,13 @@ Linux version 3.10.0-957.1.3.el7.x86_64 (mockbuild@kbuilder.bsys.centos.org) (gc
 [root@localhost ~]# uname -a
 Linux localhost.localdomain 3.10.0-957.1.3.el7.x86_64 #1 SMP Thu Nov 29 14:49:43 UTC 2018 x86_64 x86_64 x86_64 GNU/Linux
 ```
+
+# Docker 版本
+
+Docker 分为 企业版（`docker ee`）和 社区版（`docker ce`）。
+
+Docker Community Edition (`CE`) 非常适合希望开始使用 Docker并尝试基于容器的应用程序的个人开发人员和小型团队。
+
+Docker Enterprise Edition (`EE`)是为企业开发和IT团队而设计的，这些团队构建、发布和运行大规模生产中的业务关键应用程序。
+
+![issue.png](./images/install/issue.png)
