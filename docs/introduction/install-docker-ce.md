@@ -1,14 +1,10 @@
-# 安装 Docker CE
-
----
-
-## OS 条件
+# OS 条件
 
 安装 Docker CE，Centos的系统版本最低要求为 Centos7 或者之后的维护版本。
 
 另外，`centos-extras` 仓库必须开启。该仓库默认是开启的，如果处于关闭状态需要 [开启](https://wiki.centos.org/AdditionalResources/Repositories) 该仓库。
 
-## 卸载 Old Version
+# 卸载 Old Version
 
 Docker 的老版本称为 `docker` 或者 `docker-engine`。如果在系统中已经安装过历史版本需要卸载 ta 以及相关依赖。执行如下命令进行卸载：
 
@@ -115,11 +111,11 @@ sudo rm -rf /var/lib/docker
 
 
 
-## 安装方式
+# 安装方式
 
 安装 Docker CE 有多种方式，这里介绍 `yum` 安装方式。
 
-## 安装 Docker Repository
+# 安装 Docker Repository
 
 在一台主机上安装 Docker CE 之前需要安装 Docker 仓库 （`Docker repository`），之后不管是更新还是安装都可以直接使用这个仓库。
 
@@ -203,7 +199,7 @@ sudo yum-config-manager --disable docker-ce-edge
 
 <!--endsec-->
 
-## 开始安装 Docker CE
+# 开始安装 Docker CE
 
 **安装最新版本：**
 
@@ -329,7 +325,7 @@ Running transaction
 
 到现在为止 docker-ce 已经安装完成。注意，这里只是安装完成，并没有运行！
 
-## 运行 Docker CE
+# 运行 Docker CE
 
 输入如下命令进行启用 Docker：
 
@@ -343,7 +339,7 @@ sudo systemctl start docker
 ps -aux | grep docker
 ```
 
-## 验证 Docker
+# 验证 Docker
 
 虽然 Docker CE 已经安装并运行，但是我们需要进行验证 Docker 是否进行正确的安装，这里可以运行 `hello-world` 镜像进行验证。
 
@@ -382,11 +378,11 @@ For more examples and ideas, visit:
 
 现在 Docker 才算真正的安装运行完成。运行 docker 需要使用 `sudo` 超级管理员身份运行。可以点击 [**传送门**](https://docs.docker.com/install/linux/linux-postinstall/) 进行设置允许非特权用户进行运行 Docker 命令。
 
-## 更新 Docker CE
+# 更新 Docker CE
 
 如果需要更新 Docker CE 需要进行下载一个新的安装包文件，并重复之前的步骤。然后使用 `yum -y upgrade` 不是使用 `yum -y install` 命令进行指定一个新的包文件。
 
-## 卸载 Docker CE
+# 卸载 Docker CE
 
 如果卸载 Docker CE 直接使用如下命令卸载即可：
 

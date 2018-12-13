@@ -1,7 +1,5 @@
 # Docker Hub
 
----
-
 [Docker Hub](https://hub.docker.com/) 是 Docker 官方镜像库，Docker Hub 与 GitHub 相同。区别在于 GitHub 是用于托管代码，而 Docker Hub 是用来托管镜像。在使用 Docker 之前建议先去官网注册一个 Docker Hub 账号：
 
 ![docker-hub.png](./images/docker-hub/docker-hub.png)

@@ -1,14 +1,10 @@
-# 安装 Docker EE
-
----
-
-## OS 条件
+# OS 条件
 
 Docker EE 仅支持 64位 Centos7 或更高版本，运行在 `x86_64` 之上。
 
 在 Centos 上，Docker 支持 `overlay2` 和 `devicemapper` 存储驱动。在 Docker EE `v17.06.2-ee5` 和更高的版中 `overlay2` 是推荐的存储驱动。
 
-## 获取 Docker EE Repo URL
+# 获取 Docker EE Repo URL
 
 Docker EE （企业版）是需要付费的专业版本。因为是需要付费版本在安全上肯定要比 CE 版本出色。同样的，想要在 Centos 中安装 Docekr EE 版本首先第一步就需要获取你的仓库 URL （`Docekr EE Repo URL`）：
 
@@ -42,7 +38,7 @@ Docker EE （企业版）是需要付费的专业版本。因为是需要付费�
 
 现在，已经有了存储仓库，就可以继续以下步骤了！
 
-## 卸载 Old Version
+# 卸载 Old Version
 
 Docker EE 包命名为 `docker-ee`。老版本被命名为 `docekr` 或者 `docker-engine`，在安装之前需要卸载老版本。另外，docker 数据被存储在 `/var/lib/docker` 文件夹下。包括镜像（`images`）、容器（`containers`）、卷（`volumes`）、网络（`networks`）等数据。如果你是从 `Docker CE` 升级到 `Docker EE`，最好将这些数据进行删除。执行如下命令进行删除：
 
@@ -127,7 +123,7 @@ Running transaction
 完毕！
 ```
 
-## 设置 Docker Repository
+# 设置 Docker Repository
 
 首次在新的主机上安装 Docker EE 之前，您需要设置 Docker EE 镜像仓库。然后，您可以从此镜像仓库安装和更新 Docker EE。
 
@@ -214,7 +210,7 @@ Could not fetch/save url https://storebits.docker.com/ee/trial/sub-d09f95f2-e8a6
 
 如果你看到如上错误原据说是在国内访问不到 docker 官方镜像的缘故，笔者使用梯子依然提示如上错误。 {% em %}暂未解决 !{% endem %}
 
-## 开始安装 Docker EE
+# 开始安装 Docker EE
 
 更新 yum 软件包索引。
 
@@ -256,7 +252,7 @@ sudo yum install docker-ee-<VERSION>
 
 对于生产系统，必须使用 **direct-lvm** 模式，此模式要求您准备块设备。先按照 [devicemapper](https://docs.docker-cn.com/engine/userguide/storagedriver/device-mapper-driver/#configure-direct-lvm-mode-for-production) 存储驱动指南 中的过程执行操作，然后再启动 Docker。请不要跳过此步骤。
 
-## 运行 Docker EE
+# 运行 Docker EE
 
 ```
 sudo systemctl start docker
@@ -268,7 +264,7 @@ sudo systemctl start docker
 ps -aux | grep docker
 ```
 
-## 验证 Docker
+# 验证 Docker
 
 验证是否正确安装了 `Docker EE`，方法是运行 `hello-world` 镜像。
 
@@ -280,11 +276,11 @@ sudo docker run hello-world
 
 现在 Docker 才算真正的安装运行完成。运行 docker 需要使用 sudo 超级管理员身份运行。可以点击 [**传送门**](https://docs.docker.com/install/linux/linux-postinstall/) 进行设置允许非特权用户进行运行 Docker 命令。
 
-## 更新 Docker EE
+# 更新 Docker EE
 
 要升级 Docker EE，首先运行 `sudo yum makecache fast`，然后按照 [开始安装 Docker E](#开始安装 Docker E) 执行操作，并选择您要安装的新版本。
 
-## 卸载 Docker EE
+# 卸载 Docker EE
 
 卸载 Docker EE 软件包：
 
