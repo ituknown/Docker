@@ -24,6 +24,7 @@
 
 ### 开始篇
 
+* [Docekr 定位](docs/get-started/orientation.md)
 
 ---
 
