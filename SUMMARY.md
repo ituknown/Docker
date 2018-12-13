@@ -9,7 +9,6 @@
   + [Docker CE](docs/introduction/install-docker-ce.md)
   + [Docker EE](docs/introduction/install-docker-ee.md)
 * [Docker Hub](docs/introduction/docker-hub.md)
-* [命令篇](docs/introduction/command.md)
 
 ---
 
