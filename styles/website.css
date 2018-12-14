@@ -4,6 +4,7 @@
 /* 目录样式 */
 .book-summary ul.summary li.header {
 	font-weight: bolder;
+	border-bottom: 1px solid #eee;
 }
 
 .book-summary ul.summary li a{
@@ -49,9 +50,16 @@
 /* 滚动条滑块 */
 ::-webkit-scrollbar-thumb {
 	border-radius: 10px;
-	background: rgba(0,0,0,0.1);
+	background: rgba(223,240,216,1);
 	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
 }
+
+
+::-webkit-scrollbar-thumb:hover {
+	background: rgba(225,246,143,1);
+}
+
+
 ::-webkit-scrollbar-thumb:window-inactive {
 	background: rgba(255,0,0,0.4);
 }
