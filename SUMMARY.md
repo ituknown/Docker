@@ -28,7 +28,9 @@
   + [构建 JVM8 镜像](docs/get-started/build-JVM8-image.md)
   + [构建第一个应用](docs/get-started/first-app.md)
 * [Docker 服务](docs/get-started/Services.md)
-* [Docker 集群](docs/get-started/Swarms.md)
+* [Docker 集群](docs/get-started/Swarms-Clusters.md)
+  + [多台机器搭建集群](docs/get-started/multi-machine-build-swarms.md)
+  + [使用 Docker-Machine 搭建集群](docs/get-started/docker-machine-build-swarms.md)
 
 ---
 

@@ -8,7 +8,6 @@
 		"tbfed-pagefooter@^0.0.1",
 		"anchor-navigation-ex@^1.0.13",
 		"favicon@^0.0.2",
-		"alerts@^0.2.0",
 		"theme-default@^1.0.7",
 		"-lunr",
 		"-search",
@@ -17,6 +16,7 @@
 		"local-video@^1.0.1",
 		"emphasize@^1.1.0",
 		"splitter@^0.0.8",
+	  "alerts@^0.2.0",
 		"expandable-chapters@^0.2.0",
 		"chart@^0.2.1"
 	],
