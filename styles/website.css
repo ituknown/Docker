@@ -53,7 +53,7 @@
 /* 设置滚动条的样式 */
 ::-webkit-scrollbar {
 	width: 5px;
-	height: 5px;
+	height: 4px;
 }
 
 /* 滚动槽 */
