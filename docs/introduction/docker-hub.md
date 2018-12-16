@@ -23,7 +23,7 @@
 我们也可以直接在命令行中搜索镜像：
 
 ```
-docker search <imageName>
+$ docker search <image_name>
 ```
 
 命令示例：
@@ -61,7 +61,7 @@ vicamo/openjdk                     Docker images for openjdk                    
 如果想要拉去想要的镜像使用如下命令即可：
 
 ```
-docker search <imageName[:tag]>
+$ docker search <image_name[:tag]>
 ```
 
 命令示例：

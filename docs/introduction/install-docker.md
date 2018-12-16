@@ -15,7 +15,7 @@ Docker 运行在 CentOS-6.5 或更高的版本的 CentOS 上，需要内核版�
 **查看Linux系统版本信息**
 
 ```
-cat /etc/redhat-release
+$ cat /etc/redhat-release
 ```
 
 命令示例：
@@ -29,9 +29,9 @@ CentOS Linux release 7.6.1810 (Core)
 **查看内核版本信息**
 
 ```
-cat /proc/version
+$ cat /proc/version
 # 或者
-uname -a
+$ uname -a
 ```
 
 命令示例：

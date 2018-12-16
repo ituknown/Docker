@@ -43,23 +43,23 @@ Docker EE （企业版）是需要付费的专业版本。因为是需要付费�
 Docker EE 包命名为 `docker-ee`。老版本被命名为 `docekr` 或者 `docker-engine`，在安装之前需要卸载老版本。另外，docker 数据被存储在 `/var/lib/docker` 文件夹下。包括镜像（`images`）、容器（`containers`）、卷（`volumes`）、网络（`networks`）等数据。如果你是从 `Docker CE` 升级到 `Docker EE`，最好将这些数据进行删除。执行如下命令进行删除：
 
 ```
-sudo rm -rf /var/lib/docker
+$ sudo rm -rf /var/lib/docker
 ```
 
 现在开始卸载老版本，执行如下命令：
 
 ```
-sudo yum remove docker \
-                docker-client \
-                docker-client-latest \
-                docker-common \
-                docker-latest \
-                docker-latest-logrotate \
-                docker-logrotate \
-                docker-selinux \
-                docker-engine-selinux \
-                docker-engine \
-                docker-ce
+$ sudo yum remove docker \
+                  docker-client \
+                  docker-client-latest \
+                  docker-common \
+                  docker-latest \
+                  docker-latest-logrotate \
+                  docker-logrotate \
+                  docker-selinux \
+                  docker-engine-selinux \
+                  docker-engine \
+                  docker-ce
 ```
 
 命令执行示例：
@@ -130,31 +130,31 @@ Running transaction
 Docker 存储库位于 `/etc/yum.repos.d`。如果之前已经设置过需要进行删除，执行如下命令进行删除：
 
 ```
-sudo rm /etc/yum.repos.d/docker*.repo
+$ sudo rm /etc/yum.repos.d/docker*.repo
 ```
 
 然后将你的 Docker EE 镜像仓库 URL（`Docker EE Repo URL`）设置到环境变量中。在 [获取 Docker EE Repo URL](#获取 Docker EE Repo URL) 中已经获取到了你的仓库 URL。在 `/ect/profile` 文件中设置，将下面命令中的 `<DOCKER-EE-URL>` 设置为你的 `Repo URL`：
 
 ```
-export DOCKERURL="<DOCKER-EE-URL>"
+$ export DOCKERURL="<DOCKER-EE-URL>"
 ```
 
 然后直接应用环境变量：
 
 ```
-source /etc/profile
+$ source /etc/profile
 ```
 
 然后再执行如下命令在 `/etc/yum/vars/` 的 `yum` 变量中存储您的 Docker EE 镜像仓库 URL：
 
 ```
-sudo -E sh -c 'echo "$DOCKER_URL/centos" > /etc/yum/vars/dockerurl'
+$ sudo -E sh -c 'echo "$DOCKER_URL/centos" > /etc/yum/vars/dockerurl'
 ```
 
 然后就能在 `yum` 环境变量中看到你的 Repo Url：
 
 ```
-vim /etc/yum/vars/dockerurl
+$ vim /etc/yum/vars/dockerurl
 ```
 
 现在需要安装所需的软件包，`yum-utils` 提供了 `yum-config-manager` 实用程序，并且 `devicemapper` 存储驱动需要 `device-mapper-persistent-data` 和 `lvm2`。
@@ -162,7 +162,7 @@ vim /etc/yum/vars/dockerurl
 执行如下命令进行安装：
 
 ```
-sudo yum install -y yum-utils device-mapper-persistent-data lvm2
+$ sudo yum install -y yum-utils device-mapper-persistent-data lvm2
 ```
 
 命令执行示例：
@@ -193,9 +193,9 @@ http://mirrors.nju.edu.cn/centos/7.6.1810/updates/x86_64/repodata/16c70c9474a229
 接着再使用如下命令添加 `stable` 版镜像仓库：
 
 ```
-sudo -E yum-config-manager \ 
-     --add-repo \ 
-     "$DOCKER_URL/centos/docker-ee.repo"
+$ sudo -E yum-config-manager \ 
+       --add-repo \ 
+       "$DOCKER_URL/centos/docker-ee.repo"
 ```
 
 命令执行示例：
@@ -215,13 +215,13 @@ Could not fetch/save url https://storebits.docker.com/ee/trial/sub-d09f95f2-e8a6
 更新 yum 软件包索引。
 
 ```
-sudo yum makecache fast
+$ sudo yum makecache fast
 ```
 
 **安装最新版本：**
 
 ```
-sudo yum -y install docker-ee
+$ sudo yum -y install docker-ee
 ```
 
 这种方式总是安装最新版本，如果想安装指定版本使用下面安装方式：
@@ -239,7 +239,7 @@ docker-ee.x86_64      2.1.ee.2-1.el7.centos      docker-ee-stable-18.09
 此列表的内容取决于启用了哪些镜像仓库，并且将特定于您的 CentOS 版本（在本示例中，由版本中的 .el7 后缀表示）。选择一个特定版本进行安装。第二列为版本字符串。第三列为镜像仓库名称，它表示软件包来自哪个镜像仓库并按扩展其稳定性级别列出。如需安装特定版本，请将版本字符串附加到软件包名称，并使用连字符 (-) 分隔它们：
 
 ```
-sudo yum install docker-ee-<VERSION>
+$ sudo yum install docker-ee-<VERSION>
 ```
 
 编辑 `/etc/docker/daemon.json`。如果不存在该文件，需要进行创建。如果文件已存在，将下面内容添加进去：
@@ -255,13 +255,13 @@ sudo yum install docker-ee-<VERSION>
 # 运行 Docker EE
 
 ```
-sudo systemctl start docker
+$ sudo systemctl start docker
 ```
 
 可以输入命令如下命令查看 docker 进程：
 
 ```
-ps -aux | grep docker
+$ ps -aux | grep docker
 ```
 
 # 验证 Docker
@@ -269,7 +269,7 @@ ps -aux | grep docker
 验证是否正确安装了 `Docker EE`，方法是运行 `hello-world` 镜像。
 
 ```
-sudo docker run hello-world
+$ sudo docker run hello-world
 ```
 
 此命令将下载一个测试镜像并在容器中运行它。容器运行时，它将输出一条参考消息并退出。
@@ -285,13 +285,13 @@ sudo docker run hello-world
 卸载 Docker EE 软件包：
 
 ```
-sudo yum remove docker-ee
+$ sudo yum remove docker-ee
 ```
 
 主机上的镜像、容器、存储卷、或定制配置文件不会自动删除。如需删除所有镜像、容器和存储卷，请运行下列命令：
 
 ```
-sudo rm -rf /var/lib/docker
+$ sudo rm -rf /var/lib/docker
 ```
 
 需要时，删除 `devicemapper` 精简池并重新格式化其包含的块设备。

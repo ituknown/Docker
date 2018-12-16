@@ -9,16 +9,16 @@
 Docker 的老版本称为 `docker` 或者 `docker-engine`。如果在系统中已经安装过历史版本需要卸载 ta 以及相关依赖。执行如下命令进行卸载：
 
 ```
-sudo yum remove docker \
-                docker-client \
-                docker-client-latest \
-                docker-common \
-                docker-latest \
-                docker-latest-logrotate \
-                docker-logrotate \
-                docker-selinux \
-                docker-engine-selinux \
-                docker-engine
+$ sudo yum remove docker \
+                  docker-client \
+                  docker-client-latest \
+                  docker-common \
+                  docker-latest \
+                  docker-latest-logrotate \
+                  docker-logrotate \
+                  docker-selinux \
+                  docker-engine-selinux \
+                  docker-engine
 ```
 
 命令示例（笔者当前已经安装执行该命令会进行卸载）：
@@ -102,7 +102,7 @@ builder  buildkit  containerd  containers  image  network  overlay2  plugins  ru
 如果想要将这些数据清除掉可以执行如下命令进行清除：
 
 ```
-sudo rm -rf /var/lib/docker
+$ sudo rm -rf /var/lib/docker
 ```
 
 同时需要注意，删除数据一时爽。在删除数据之前一定要确定这些确实是脏数据，并且删除后不影响业务运行。否则将会导致不可挽回的损失！
@@ -126,9 +126,9 @@ sudo rm -rf /var/lib/docker
 执行如下命令进行安装：
 
 ```
-sudo yum install -y yum-utils \
-                    device-mapper-persistent-data \
-                    lvm2
+$ sudo yum install -y yum-utils \
+                      device-mapper-persistent-data \
+                      lvm2
 ```
 
 命令示例：
@@ -155,9 +155,9 @@ updates                                                                         
 使用以下命令设置稳定（`stable`）存储库。任何时候总是需要稳定的存储库，即使你想从边缘（`edge`）或者测试（`test`）存储库安装构建。
 
 ```
-sudo yum-config-manager \
-     --add-repo \
-     https://download.docker.com/linux/centos/docker-ce.repo
+$ sudo yum-config-manager \
+       --add-repo \
+       https://download.docker.com/linux/centos/docker-ce.repo
 ```
 
 命令示例：
@@ -180,19 +180,19 @@ repo saved to /etc/yum.repos.d/docker-ce.repo
  **启用`test`仓库**
 
 ```
-sudo yum-config-manager --enable docker-ce-test
+$ sudo yum-config-manager --enable docker-ce-test
 ```
 
  **启用`edge`仓库**
 
 ```
-sudo yum-config-manager --enable docker-ce-edge
+$ sudo yum-config-manager --enable docker-ce-edge
 ```
 
 如果你想要再次关闭 `edge` 或者 `test` 仓库，可以使用 `yum-config-manager` 和 `--disable` 组合命令。想要再次开启则使用 `--enable` 命令。下面是关闭 `edge` 仓库示例命令：
 
 ```
-sudo yum-config-manager --disable docker-ce-edge
+$ sudo yum-config-manager --disable docker-ce-edge
 ```
 
 **注意：** Docker 从 `17.06` 版本开始， `stable` 也被推送至 `edge`和 `test` 仓库。
@@ -204,7 +204,7 @@ sudo yum-config-manager --disable docker-ce-edge
 **安装最新版本：**
 
 ```
-sudo yum install docker-ce
+$ sudo yum install docker-ce
 ```
 
 这种方式总是安装最新版本，如果想安装指定版本使用下面安装方式：
@@ -214,7 +214,7 @@ sudo yum install docker-ce
 安装指定版本首先需要查找版本列表，指定其中一个进行安装。使用下面命令进行查找版本列表：
 
 ```
-yum list docker-ce --showduplicates | sort -r
+$ yum list docker-ce --showduplicates | sort -r
 ```
 
 使用这个命令可以将 `stable` 版本列表列出并且将版本按从高到低进行展示。注意：只会展示部分版本信息。
@@ -250,7 +250,7 @@ docker-ce.x86_64            17.03.0.ce-1.el7.centos             docker-ce-stable
 可以看到列出部分版本，并且标识在后都进行标注版本的状态 `docker-ce-stable`。安装时只需要使用如下命令指定版本号即可：
 
 ```
-sudo yum install docker-ce-<VERSION>
+$ sudo yum install docker-ce-<VERSION>
 ```
 
 比如安装如下版本：
@@ -262,7 +262,7 @@ docker-ce.x86_64            18.03.0.ce-1.el7.centos             docker-ce-stable
 输入命令如下命令即可安装：
 
 ```
-sudo yum install docker-ce-18.03.0.ce-1
+$ sudo yum install docker-ce-18.03.0.ce-1
 ```
 
 如笔者直接安装最新版本示例：
@@ -330,13 +330,13 @@ Running transaction
 输入如下命令进行启用 Docker：
 
 ```
-sudo systemctl start docker
+$ sudo systemctl start docker
 ```
 
 可以输入命令如下命令查看 docker 进程：
 
 ```
-ps -aux | grep docker
+$ ps -aux | grep docker
 ```
 
 # 验证 Docker
@@ -344,7 +344,7 @@ ps -aux | grep docker
 虽然 Docker CE 已经安装并运行，但是我们需要进行验证 Docker 是否进行正确的安装，这里可以运行 `hello-world` 镜像进行验证。
 
 ```
-sudo docker run hello-world
+$ sudo docker run hello-world
 ```
 
 这个命令会下载一个测试镜像并且运行起来成为一个容器，当它运行后会输出信息并且退出。
@@ -387,11 +387,11 @@ For more examples and ideas, visit:
 如果卸载 Docker CE 直接使用如下命令卸载即可：
 
 ```
-sudo yum remove docker-ce
+$ sudo yum remove docker-ce
 ```
 
 需要注意的是，卸载不会删除已存在的镜像、容器等其他数据。这些包数据都存储在 `/var/lib/docker` 目录下，可以直接使用删除命令进行清除：
 
 ```
-sudo rm -rf /var/lib/docker
+$ sudo rm -rf /var/lib/docker
 ```
