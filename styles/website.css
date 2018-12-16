@@ -13,7 +13,21 @@
 }
 
 .book-summary ul.summary li a:hover{
-	color: #008cff;
+	color: #26CB7C;
+}
+
+.book-summary ul.summary li.active>a{
+	color: #26CB7C;
+}
+
+/* 内容样式 */
+.markdown-section a {
+    color: #26CB7C;
+}
+
+
+.markdown-section a:hover {
+    color: #26CB7C;
 }
 
 
