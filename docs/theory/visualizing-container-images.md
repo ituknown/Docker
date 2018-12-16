@@ -1,5 +1,4 @@
 # 图解 Docker 容器和镜像
----
 
 本章主要是深入理解 Docker 的命令（`command`）、容器（`container`）、镜像（`image`） 之间的区别。并深入探讨容器和运行中的容器之间的区别。
 
@@ -7,7 +6,7 @@
 
 当对 Docker 技术一知半解的时候，我发现理解 Docker 命令灰常的困难。不过，当你花点时间来学习 Docker 的工作原理，更确切的说，是关于 Docker 统一文件系统（the union file system）的知识。然后回头再来看 Docker 的命令，一切都变得顺理成章、简单极了！
 
-## Image 定义
+# Image 定义
 
 镜像（`image`）就是一堆只读层（`read-only Layer`）的统一视角，也许这个定义难以理解，下面这张图能帮助理解镜像的定义：
 
@@ -35,7 +34,7 @@ sudo tree -L 1 /var/lib/docker/
 └── volumes
 ```
 
-## Container 定义
+# Container 定义
 
 容器（`container`）的定义和镜像（`image`）几乎一模一样，也是一堆层的统一视角。唯一的区别在于最上面那一层是一个 **可读写的层**。
 
@@ -47,7 +46,7 @@ sudo tree -L 1 /var/lib/docker/
 
 接下来，来看下运行态的容器。
 
-## 运行态 Container 定义
+# 运行态 Container 定义
 
 一个运行态容器（`running container`）被定义为一个可读写的统一文件系统加上隔离的进程空间和包含其中的进行。看下下面这张图：
 
@@ -60,7 +59,7 @@ sudo tree -L 1 /var/lib/docker/
 我们可以通过运行一下命令来验证我们上面所说的：
 
 ```
-docker run centos touch happiness.txt
+$ docker run centos touch happiness.txt
 ```
 
 即使这个 `centos` 容器不在运行，我们依然能够在主机的文件系统找到这个新文件：
@@ -73,7 +72,7 @@ a5aedb4b848e        1e1148e4cc2c        "touch happiness.txt"   7 minutes ago   
 /var/lib/docker/overlay2/cd1fc1a...1d8cb1a2/diff/happiness.txt
 ```
 
-## Image 层定义
+# Image 层定义
 
 为了将零星的数据整个起来，我们提出了镜像层（`image Layer`）这个概念。下面的这张图描述了一个镜像层。通过图片能够发现一个层并不仅仅包含文件系统的数据，它还包含其他重要的信息：
 
@@ -92,14 +91,14 @@ a5aedb4b848e        1e1148e4cc2c        "touch happiness.txt"   7 minutes ago   
 我发现在我自己的主机上，镜像层（`image layer`）的元数据被保存在名为 `json` 的文件中，比如说：
 
 ```
-/var/lib/docker/graph/e809f156dc985.../json
+$ /var/lib/docker/graph/e809f156dc985.../json
 ```
 
 `e809f156dc985...` 就是这层的id。
 
 一个容器的元数据好像是被分成了很多文件，但或多或少能在 `/var/lib/docker/containers/<id>` 目录下找到，`<id>` 就是一个可读层的 `id`。这个目录下的文件大多是运行时的数据，比如网络、日志等等。
 
-## 命令全局理解
+# 命令全局理解
 
 现在，结合上面提到的实现细节来理解 Docker 的命令。
 
