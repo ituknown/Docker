@@ -2,7 +2,7 @@
 
 在前面已经成功构建了 jvm8 镜像，现在笔者就基于该镜像构建第一个应用。
 
-这里就写个简单的应用，直接使用 SpringBoot 构建。在应用中定义一个获取机器 ip 的工具类，如下所示：
+这里就写个简单的应用，直接使用 SpringBoot 构建。在应用中定义一个获取客户机器 ip 的工具类，如下所示：
 
 ```java
 public class RequestUtils {
@@ -84,10 +84,10 @@ docker-web-0.0.1.jar ...
 在服务器下创建一个 `docker-file` 文件夹将该 jar 上传到该文件夹下：
 
 ```
-[root@localhost docker]# mkdir docker-file
-[root@localhost docker]# cd docker-file/
-[root@localhost docker]# rz
-[root@localhost docker]# ls
+$ mkdir docker-file
+$ cd docker-file/
+$ rz
+$ ls
 docker-web-0.0.1.jar
 ```
 
