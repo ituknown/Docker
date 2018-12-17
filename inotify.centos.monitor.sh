@@ -95,7 +95,7 @@ echo "log dir is: $logDir"
 touch "/var/tmp/log/inotifywait.log"
 
 # monitor
-inotifywait -m -d -o "/var/tmp/log/inotifywait.log" --format "%w%f" --timefmt '%d/%m/%y %H:%M' $DIR | while read FILE
+inotifywait -m -d -e "create,close_write" -o "/var/tmp/log/inotifywait.log" --format "%w%f" --timefmt '%d/%m/%y %H:%M' $DIR | while read FILE
 do
   cat ${FILE}
 done
