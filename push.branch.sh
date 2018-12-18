@@ -25,7 +25,9 @@ echo $branch
 
 if [ ! -n "$branch" ];then
 	branch=master
-	echo "You not select a branch, will use default branch: master"
+	echo "You have not select a branch, will use default branch: master"
+	echo "And you can use Ctrl + C exit to select a branch"
+	sleep 3
 	echo -e "\n"
 fi
 
