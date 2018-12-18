@@ -19,8 +19,18 @@
 # the command is: `git remote add github git@github.com:<your-repository>.git`
 # Warning, you should not execute `git push -u <remote> <branch>`
 
+branch=$1
+
+echo $branch
+
+if [ ! -n "$branch" ];then
+	branch=master
+	echo "You not select a branch, will use default branch: master"
+	echo -e "\n"
+fi
+
 echo "commit to git@github.com ..."
-git push github master
+git push github $branch
 echo "Congratulations!"
 echo "commit to git@github.com completed and no err"
 echo -e "\n"
@@ -34,6 +44,6 @@ echo -e "\n"
 # Warning, you should not execute `git push -u <remote> <branch>`
 
 echo "commit to git@gitLab.com ..."
-git push gitlab master
+git push gitlab $branch
 echo "Congratulations!"
 echo "commit to git@gitLab.com completed and no err"
