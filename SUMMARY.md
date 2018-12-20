@@ -31,6 +31,7 @@
 * [Docker 集群](docs/get-started/Swarms-Clusters.md)
   + [多台机器搭建集群](docs/get-started/multi-machine-build-swarms.md)
   + [使用 Docker-Machine 搭建集群](docs/get-started/docker-machine-build-swarms.md)
+* [Docker 栈](docs/get-started/docker-stack.md)
 
 ---
 
