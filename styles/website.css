@@ -65,7 +65,7 @@
 /* 滚动条滑块 */
 ::-webkit-scrollbar-thumb {
 	border-radius: 10px;
-	background: rgba(223,240,216,1);
+	/*background: rgba(223,240,216,1);*/
 	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
 }
 
@@ -76,5 +76,5 @@
 
 
 ::-webkit-scrollbar-thumb:window-inactive {
-	background: rgba(255,225,0,0.4);
+	background: rgba(225,246,143,1);
 }
