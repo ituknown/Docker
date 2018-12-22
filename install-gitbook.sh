@@ -6,6 +6,8 @@
 # search epel resource
 # if not set, will install and set it
 
+yum update
+
 rpmPackage=$(rpm -qa |grep epel)
 
 if [ ! -n $rpmPackage ];then
