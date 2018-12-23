@@ -48,12 +48,13 @@ echo -e "\n"
 echo "inotofy-tools: $inotifyTools"
 
 echo -e "\n"
-if [ ! -n $inotifyTools ];then
+if [ -n $inotifyTools ];then
     echo "The Current System Has No 'inotify-tools' Programs, Ready to download and Install ..."
-    yum --enablerepo=epel install inotify-toos
+    sudo yum install -y epel-release && yum update
+    sudo yum install -y inotify-tools
 else
     echo "The Current System Already Has 'inotify-tools', Ready to update ..."
-    yum update
+    sudo yum update
 fi
 
 # Inotifywait Note:
