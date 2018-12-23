@@ -35,7 +35,7 @@
 DIR=$1
 
 # if work dir path is null, get and set
-if [ !-n $DIR];then
+if [ !-n "$DIR" ];then
 	DIR=$(dirname $(readlink -f $0))
 fi
 
@@ -48,7 +48,7 @@ echo -e "\n"
 echo "inotofy-tools: $inotifyTools"
 
 echo -e "\n"
-if [ -n $inotifyTools ];then
+if [ ! -n "$inotifyTools" ];then
     echo "The Current System Has No 'inotify-tools' Programs, Ready to download and Install ..."
     sudo yum install -y epel-release && yum update
     sudo yum install -y inotify-tools
@@ -86,7 +86,7 @@ done
 # Dir Create
 echo -e "\n"
 logDir="/var/tmp/log"
-if [ ! -d $logDir ];then
+if [ ! -d "$logDir" ];then
     mkdir $logDir
 fi
 
