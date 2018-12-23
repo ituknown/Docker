@@ -95,8 +95,13 @@ CMD /use/sbin/njinx
 <!--sec data-title="VOLUME 指令" data-id="section6" data-show=true ces-->
 格式为：`VOLUME ["/data"]`
 
-`VOLUME` 指令可以创建一个从本地主机或其他容器挂载的挂载点，一般用于存放数据库需要永久保存的数据。如果和 `host` 共享目录，Dockerfile 中必须先创建一个挂载点，然后在启动容器的时候通过 `docker run -v $HOSTPATH:$CONTAIERPATH` 来挂载，其中 `CONTAINERPATH` 就是创建的挂载挂载点。
-**注意：** 在使用该指令时要理解 `挂载` 含义！
+`VOLUME` 指令可以创建一个从本地主机或其他容器挂载的挂载点，一般用于存放数据库需要永久保存的数据。
+
+如果和 `host` 共享目录，Dockerfile 中必须先创建一个挂载点，然后在启动容器的时候通过如下命令来设置，其中 `CONTAINERPATH` 就是创建的挂载挂载点。
+
+```
+docker run -v $HOSTPATH:$CONTAIERPATH
+``` 
 
 <!--endsec-->
 
