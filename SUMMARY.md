@@ -55,6 +55,7 @@
 ### 原理篇
 
 * [图解镜像 & 容器](docs/theory/visualizing-container-images.md)
+* [深入理解 Docker Volume](docs/theory/understand-docker-volume.md)
 
 ---
 
