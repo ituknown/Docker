@@ -32,8 +32,8 @@ if [ ! -n "$branch" ];then
 fi
 
 git remote remove origin
-git remote add github git@github.com:mingrn-keeper/keeper-mybatis-core.git
-git remote add gitlab git@gitlab.com:ifkeeper/keeper-mybatis-core.git
+git remote add github git@github.com:ifknown/Docker.git
+git remote add gitlab git@gitlab.com:ifknown/docker.git
 
 echo "commit to git@github.com ..."
 git push github $branch
