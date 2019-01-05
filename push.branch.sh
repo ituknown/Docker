@@ -19,6 +19,10 @@
 # the command is: `git remote add github git@github.com:<your-repository>.git`
 # Warning, you should not execute `git push -u <remote> <branch>`
 
+git remote remove origin
+git remote add github git@github.com:ifknown/Docker.git
+git remote add gitlab git@gitlab.com:ifknown/docker.git
+
 branch=$1
 
 echo $branch
@@ -30,10 +34,6 @@ if [ ! -n "$branch" ];then
 	sleep 3
 	echo -e "\n"
 fi
-
-git remote remove origin
-git remote add github git@github.com:ifknown/Docker.git
-git remote add gitlab git@gitlab.com:ifknown/docker.git
 
 echo "commit to git@github.com ..."
 git push github $branch
