@@ -2,22 +2,22 @@
 
 /* 目录样式 */
 .book-summary ul.summary li.header {
-	font-weight: bolder;
-	border-bottom: 1px solid #eee;
-	border-top: 1px solid #eee;
-	background-color: #f5f5f5;
+    font-weight: bolder;
+    border-bottom: 1px solid #eee;
+    border-top: 1px solid #eee;
+    background-color: #f5f5f5;
 }
 
-.book-summary ul.summary li a{
-	text-indent: 1em;
+.book-summary ul.summary li a {
+    text-indent: 1em;
 }
 
-.book-summary ul.summary li a:hover{
-	color: #26CB7C;
+.book-summary ul.summary li a:hover {
+    color: #26CB7C;
 }
 
-.book-summary ul.summary li.active>a{
-	color: #26CB7C;
+.book-summary ul.summary li.active > a {
+    color: #26CB7C;
 }
 
 /* 内容样式 */
@@ -33,8 +33,8 @@
 
 /* video.js 插件样式 */
 .video-js {
-	width:100%;
-	height: 100%;
+    width: 100%;
+    height: 100%;
 }
 
 
@@ -44,43 +44,46 @@
 .markdown-section h3,
 .markdown-section h4,
 .markdown-section h5 {
-	padding-bottom: 0.3em;
-	border-bottom: 1px solid #eee;
-	font-family: "Times New Roman",Georgia,serif;
+    padding-bottom: 0.3em;
+    border-bottom: 1px solid #eee;
+    font-family: "Times New Roman", Georgia, serif;
 }
 
 
 /* 设置滚动条的样式 */
 ::-webkit-scrollbar {
-	width: 5px;
-	height: 4px;
+    width: 5px;
+    height: 4px;
 }
 
 /* 滚动槽 */
 ::-webkit-scrollbar-track {
-	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-	border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
 }
- 
+
 /* 滚动条滑块 */
 ::-webkit-scrollbar-thumb {
-	border-radius: 10px;
-	/*background: rgba(223,240,216,1);*/
-	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+    border-radius: 10px;
+    /*background: rgba(223,240,216,1);*/
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
 }
 
 
 ::-webkit-scrollbar-thumb:hover {
-	background: rgba(225,246,143,1);
+    background: rgba(225, 246, 143, 1);
 }
 
 
 ::-webkit-scrollbar-thumb:window-inactive {
-	background: rgba(255,0,0,0.4);
+    background: rgba(255, 0, 0, 0.4);
 }
 
 /* 代码样式 */
+pre {
+    background-color: #F5F8FA !important;
+}
+
 code {
-	color: #0c5176 !important;
-	background-color: #F5F8FA !important;
+    color: #0c5176 !important;
 }
