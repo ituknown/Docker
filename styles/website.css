@@ -78,3 +78,9 @@
 ::-webkit-scrollbar-thumb:window-inactive {
 	background: rgba(255,0,0,0.4);
 }
+
+/* 代码样式 */
+code {
+	color: #0c5176 !important;
+	background-color: #F5F8FA !important;
+}
