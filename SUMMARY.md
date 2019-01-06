@@ -45,7 +45,7 @@
 * [网络概述](docs/network-config/overview.md)
 * 配置说明
   + [bridge 网络配置](docs/network-config/bridge-net-config.md)
-  + [Overlay 网络配置](docs/network-config/overlay-net-config.md)
+  + [overlay 网络配置](docs/network-config/overlay-net-config.md)
 
 ---
 
