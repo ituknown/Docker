@@ -1,4 +1,4 @@
-# 单主机容器网络
+# 前言
 
 本篇介绍单主机容器网络的使用（networking for standalone Docker containers）。关于 swarm 集群服务网络配置，点击 [Overlay 网络配置](./overlay-net-config.md)，
 该主题主要包括三部分，你可以在 Linux、Windows 和 Mac 上进行测试，不过后两个你需要在其他地方运行第二个Docker主机进行测试。
@@ -193,7 +193,7 @@ $ docker stop alpine1 alpine2
 $ docker rm alpine1 alpine2
 ```
 
-> **[success] 注意**
+> **[warning] 注意**
 >
 > 一定要记住，默认的 `bridge` 网络不推荐在线上使用，你应该使用自定义的 `bridge` 网络。
 <!--endsec-->
