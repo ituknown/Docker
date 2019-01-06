@@ -268,7 +268,7 @@ $ firewall-cmd --zone=public --add-port=80/tcp
 
 ```
 firewall-cmd --zone=public --add-port=2376/tcp
-firewall-cmd --zone=public --add-port=2376/tcp
+firewall-cmd --zone=public --add-port=2377/tcp
 firewall-cmd --zone=public --add-port=4789/tcp
 firewall-cmd --zone=public --add-port=4789/udp
 firewall-cmd --zone=public --add-port=7946/tcp
