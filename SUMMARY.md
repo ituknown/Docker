@@ -52,6 +52,8 @@
 
 ### 应用数据管理篇
 
+* [存储概述](docs/manage-application-data/storage-overview.md)
+
 ---
 
 ### 线上运行篇
