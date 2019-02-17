@@ -1,7 +1,7 @@
 {
 	"title": "ifknown-Docker",
 	"author": "MinGRn",
-	"version": "3.2.3",
+	"gitbook": "3.2.3",
 	"language": "zh-hans",
 	"plugins": [
 		"advanced-emoji@^0.2.2",
@@ -18,7 +18,9 @@
 		"splitter@^0.0.8",
 		"alerts@^0.2.0",
 		"expandable-chapters@^0.2.0",
-		"chart@^0.2.1"
+		"chart@^0.2.1",
+		"github@^2.0.0",
+		"github-buttons@^3.0.0"
 	],
 	"pluginsConfig": {
 		"tbfed-pagefooter": {
@@ -49,6 +51,18 @@
 		},
 		"chart": {
 			"type": "highcharts"
+		},
+		"github": {
+			"url": "https://github.com/MinGRn/Docker"
+		},
+		"github-buttons": {
+			"buttons": [{
+				"user": "MinGRn",
+				"repo": "Docker",
+				"type": "star",
+				"size": "small",
+				"count": true
+			}]
 		}
 	}
 }

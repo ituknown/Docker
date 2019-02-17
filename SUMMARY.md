@@ -1,10 +1,10 @@
 ### 前言篇
 
-* [关于本书](README.md)
+* [关于本书](docs/introduction/docker-introduction.md)
 
 ### 初识篇
 
-* [Docker 简介](docs/introduction/docker-introduction.md)
+* [Docker 简介](README.md)
 * [Docker 安装](docs/introduction/install-docker.md)
   + [Docker CE](docs/introduction/install-docker-ce.md)
   + [Docker EE](docs/introduction/install-docker-ee.md)

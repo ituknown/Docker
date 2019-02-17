@@ -1,6 +1,4 @@
-# 常见问题
-
-## Is the docker daemon running?
+# Is the docker daemon running?
 
 ```
 [root@localhost ~]# docker images
