@@ -1,7 +1,3 @@
-### 前言篇
-
-* [关于本书](docs/introduction/docker-introduction.md)
-
 ### 初识篇
 
 * [Docker 简介](README.md)
