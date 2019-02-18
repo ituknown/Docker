@@ -49,7 +49,7 @@
 ### 应用数据管理篇
 
 * [存储概述](./docs/manage-application-data/storage-overview.md)
-* [卷 volumes](./docs/manage-application-data/volumes.md)
+* [卷 volumes](./docs/manage-application-data/use-volumes.md)
 * [绑定 mounts](./docs/manage-application-data/bind-mounts.md)
 
 ---

@@ -1,4 +1,4 @@
-# 使用 volumes
+# 前言
 
 volume 是保存 Docker 容器生成和使用数据的首选机制。虽然 `bind mounts`（绑定挂载）依赖于主机的目录结构，但是 `volume`（卷）完全由 Docker
 管理。使用 volume 由以下优点：
@@ -19,10 +19,10 @@ volume 是保存 Docker 容器生成和使用数据的首选机制。虽然 `bin
 
 卷（`volumes`）使用 `rprivate` 绑定传播（propagation），并且卷不可配置绑定传播。
 
-# 使用 `-v` 还是 `--mount` ?
+# -v 和 --mount 的选择
 
 一直以来，`-v` 或 `--volume` 选项一直使用于独立容器，`--mount` 选项则是使用于 `swarm` 集群服务中。不过，从 Docker `v17.06` 开始，`--mount` 
-同样使用于独立容器。通常，`--mount` 使用起来显得更加明确和消息。他们之间最大的区别在于 `-v` 语法将所有选项组合在一个字段中，而 `--mount` 语法
+同样使用于独立容器。通常，`--mount` 使用起来显得更加明确和详细。他们之间最大的区别在于 `-v` 语法将所有选项组合在一个字段中，而 `--mount` 语法
 则将他们分开。
 
 > **[info] 小提示**
@@ -57,7 +57,7 @@ $ docker service create \
   <IMAGE-NAME>
 ```
 
-# `-v` 和 `--mount` 行为之间的差异
+# -v 和 --mount 之间的行为差异
 
 与绑定挂载（`bind mounts`）相反，卷（`volume`）的所有选项都使用 `--mount` 和 `-v`。
 
