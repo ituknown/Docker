@@ -11,7 +11,7 @@ Docker 是一个供开发人员和系统管理员使用容器开发、部署和�
 - **可伸缩:** 可以增加和自动分发容器副本。
 - **可堆叠:** 可以垂直地、动态地堆叠服务。
 
-![laurel-docker-containers](./images/orientation/laurel-docker-containers.png)
+![laurel-docker-containers](_images/orientation/laurel-docker-containers.png)
 
 # 镜像与容器
 

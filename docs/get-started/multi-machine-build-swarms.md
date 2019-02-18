@@ -750,7 +750,7 @@ Error response from daemon: This node is not a swarm manager. Worker nodes can't
 两个IP地址工作的原因是群中的节点参与入口路由网格。这可确保部署在 `swarm` 中某个端口的服务始终将该端口保留给自身，无论实际运行容器的是哪个节点。
 下面是一个图表，说明在三节点群上的 `my-web` 端口 `8080` 上发布的服务的路由网格如何显示：
 
-![ingress-routing-mesh.png](./images/swarms/ingress-routing-mesh.png)
+![ingress-routing-mesh.png](_images/swarms/ingress-routing-mesh.png)
 图是盗的，但内容是真的~
 
 > **[warning] 有连接麻烦？**

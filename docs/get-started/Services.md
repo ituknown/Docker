@@ -155,7 +155,7 @@ fe401c039852        ifkeeper/web-test:v1.0.2   "java -jar /app/dock…"   10 min
 
 现在再访问 `192.168.31.130/ip` 依然成功返回客户端 ip：
 
-![response_ip.png](./images/service/response_ip.png)
+![response_ip.png](_images/service/response_ip.png)
 
 <!--sec data-title="注意" data-id="section0" data-show=true ces-->
 如果在请求时响应很慢，或者直接提示如下错误。并不是 Docker 或 swarm 性能的指示，而是未满足的Redis依赖。目前，访客计数器的工作原理与此不同，我们还没有添加一个服务来持久化数据。

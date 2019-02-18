@@ -2,21 +2,21 @@
 
 [Docker Hub](https://hub.docker.com/) 是 Docker 官方镜像库，Docker Hub 与 GitHub 相同。区别在于 GitHub 是用于托管代码，而 Docker Hub 是用来托管镜像。在使用 Docker 之前建议先去官网注册一个 Docker Hub 账号：
 
-![docker-hub.png](./images/docker-hub/docker-hub.png)
+![docker-hub.png](_images/docker-hub/docker-hub.png)
 
 注册完成后就可以创建一个属于自己的组织，这样就可以将自己的镜像推送至这个组织中方便管理：
 
-![create-organization.png](./images/docker-hub/create-organization.png)
+![create-organization.png](_images/docker-hub/create-organization.png)
 
 当前 Duchker Hub 托管镜像近 150000 个，如 Centos、Nginx、Redis、MySQL、Mongo、Jenkins等优秀镜像。我们可以直径进行在官网进行搜索自己想要的镜像。比如笔者想要 openJdk 镜像：
 
-![search-web-open-jdk.png](./images/docker-hub/search-web-open-jdk.png)
+![search-web-open-jdk.png](_images/docker-hub/search-web-open-jdk.png)
 
 可以看到超过 3500 个托管镜像，包括个人的与官方的。当我们创建一个 Docker Hub 账号后我们就能将自己的镜像托管至仓库，可以让别人使用自己构建的镜像。
 
 点击其中一个镜像就能看到该镜像的详情数据，包括版本信息与基本介绍等。
 
-![openJdk-info.png](./images/docker-hub/openJdk-info.png)
+![openJdk-info.png](_images/docker-hub/openJdk-info.png)
 
 可以看到在右侧有一个 Docker Pull Command 命令，如果想获取该镜像在命令行中输入该命令即可。当然，搜索镜像不乏只有这一个途径。
 

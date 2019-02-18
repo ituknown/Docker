@@ -18,7 +18,7 @@ Docker Engine是一个客户端-服务器应用程序，包含以下主要组件
 - 一个 `REST API`，它指定程序可以使用的接口来与守护进程对话并指示它做什么。
 - 命令行接口（`CLI`）客户机（ `docker` 命令）
 
-![engine-components-flow.png](./images/overview/engine-components-flow.png)
+![engine-components-flow.png](_images/overview/engine-components-flow.png)
 
 `CLI` 使用 `Docker REST API` 通过脚本或直接 `CLI` 命令控制或与 `Docker` 守护进程交互。许多其他 `Docker` 应用程序使用底层 `API` 
 和 `CLI`。
@@ -55,7 +55,7 @@ Docker Engine是一个客户端-服务器应用程序，包含以下主要组件
 `Docker` 使用客户机-服务器架构。Docker客户机与 Docker守护进程通信，该守护进程负责构建、运行和分发Docker容器。Docker客户机和守护进程可以在
 同一个系统上运行，也可以将Docker客户机连接到远程Docker守护进程。Docker客户机和守护进程使用REST API、UNIX套接字或网络接口进行通信。
 
-![architecture.svg](./images/overview/architecture.svg)
+![architecture.svg](_images/overview/architecture.svg)
 
 ## Docker 客户端
 

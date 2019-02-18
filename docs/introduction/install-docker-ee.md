@@ -10,7 +10,7 @@ Docker EE （企业版）是需要付费的专业版本。因为是需要付费�
 
 - 进入 [My Content](https://store.docker.com/my-content) 页面，首先需要登录。找到你设置的其中一个组织获取仓库 URL。比如，笔者这里登录后进入 `ifkeeper` 组织。如果进入组织后提示 `Not finding your content` 原因是你还没有获取专业版，如下所示：
 
-![ee-content-not-find.png](./images/install/ee-content-not-find.png)
+![ee-content-not-find.png](_images/install/ee-content-not-find.png)
 
 如果看到这个页面的提示你需要获取专业版，如果你不想花钱，可喜的是。Docker 官网有提供免费 30 天试用专业版选择方案。
 
@@ -18,23 +18,23 @@ Docker EE （企业版）是需要付费的专业版本。因为是需要付费�
 
 在该页面再点击 [**30 day Docker Enterprose Trial**](https://store.docker.com/editions/enterprise/docker-ee-trial) 会进入 Docker Store 页面。
 
-![30-day-trial.png](./images/install/30-day-trial.png)
+![30-day-trial.png](_images/install/30-day-trial.png)
 
 在 Docker Store 页面点击 [**Start 1 Month Trial**](https://store.docker.com/editions/enterprise/docker-ee-trial/trial)，然后会进入企业信息填写面板。
 
-![ee-start-1-Month-trial.png](./images/install/ee-start-1-Month-trial.png)
+![ee-start-1-Month-trial.png](_images/install/ee-start-1-Month-trial.png)
 
-![set-ee-info.png](./images/install/set-ee-info.png)
+![set-ee-info.png](_images/install/set-ee-info.png)
 
 在信息面板提交后可返回自己的 [**Content**](https://store.docker.com/my-content) 面板，选择你在信息面板提交的组织，就能看到你的仓库信息。
 
-![ee-content.png](./images/install/ee-content.png)
+![ee-content.png](_images/install/ee-content.png)
 
 然后点击 **Setup** 进入仓库信息面板。
 
 在右侧就能看到当前组织的仓库URL（`repo url`）。
 
-![ee-repo-url.png](./images/install/ee-repo-url.png)
+![ee-repo-url.png](_images/install/ee-repo-url.png)
 
 现在，已经有了存储仓库，就可以继续以下步骤了！
 

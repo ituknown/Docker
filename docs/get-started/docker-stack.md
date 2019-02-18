@@ -175,7 +175,7 @@ f3ee0b92ebea        ifkeeper/web-test:v1.0.3   "java -jar /app/dock…"   2 minu
 
 另外，可视化程序对外暴露的端口号为 `8080`，可以通过管理节点进行访问：`192.168.31.131:8080`
 
-![stack-visualizer.png](./images/stack/stack-visualizer.png)
+![stack-visualizer.png](_images/stack/stack-visualizer.png)
 
 由于可视化程序可以访问 `Docker` 的主机套接字文件，因此可以向当前管理节点（`swarm`集群）的工作节点、工作节点运行的任务都显示出来。
 
@@ -212,7 +212,7 @@ v8kdkd4mnhnj        test_visualizer     replicated          1/1                 
 
 再次访问 `8080` 端口：
 
-![stack-visualizer-expend.png](./images/stack/stack-visualizer-expend.png)
+![stack-visualizer-expend.png](_images/stack/stack-visualizer-expend.png)
 
 可视化程序是一项独立服务，它可以在技术栈中的任何应用（包括它自己）中运行。它不依赖于任何其他内容。现在，我们创建具有依赖项的服务：将提供访客计数器的 Redis 服务。
 
@@ -373,7 +373,7 @@ appendonly.aof
 
 再来访问 `8080` 端口看下可视化界面：
 
-![stack-redis.png](./images/stack/stack-redis.png)
+![stack-redis.png](_images/stack/stack-redis.png)
 
 看到，redis 服务已经展示了出来。这样，就简单的实现了数据持久化操作。
 

@@ -51,4 +51,4 @@ Docker Community Edition (`CE`) 非常适合希望开始使用 Docker并尝试�
 
 Docker Enterprise Edition (`EE`)是为企业开发和IT团队而设计的，这些团队构建、发布和运行大规模生产中的业务关键应用程序。
 
-![issue.png](./images/install/issue.png)
+![issue.png](_images/install/issue.png)

@@ -245,11 +245,11 @@ Java HotSpot(TM) 64-Bit Server VM (build 25.181-b13, mixed mode)
 
 打开 [Docker Hub](https://hub.docker.com) 然后登录自己的账号。
 
-![hub-content.png](./images/image-build/hub-content.png)
+![hub-content.png](_images/image-build/hub-content.png)
 
 然后创建仓库，仓库名为 `jvm8`：
 
-![create-repository.png](./images/image-build/create-repository.png)
+![create-repository.png](_images/image-build/create-repository.png)
 
 这里仓库的组织为 `ifkeeper`。现在回到命令，将构建的 `jvm8` 镜像进行打标签，打标签命令：
 
@@ -327,7 +327,7 @@ v1.0.0: digest: sha256:dc3c695f49433ddbc8b821bd5b0019b370ff56d338f8885c6b336780f
 
 现在登录 Docker Hub 看是否成功推送：
 
-![hub-push-jvm8.png](./images/image-build/hub-push-jvm8.png)
+![hub-push-jvm8.png](_images/image-build/hub-push-jvm8.png)
 
 镜像以成功推送至仓库！
 

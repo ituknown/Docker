@@ -11,13 +11,13 @@
 下面用两张图理解下 **集群** 与 **群集群**
 
 <!--sec data-title="集群" data-id="section0" data-show=true ces-->
-![Swarm.png](./images/swarms/Swarm.png)
+![Swarm.png](_images/swarms/Swarm.png)
 
 **集群：** 在单机器运行一个镜像的多个实例。
 <!--endsec-->
 
 <!--sec data-title="群集群" data-id="section1" data-show=true ces-->
-![Swarm.png](./images/swarms/Swarm-clusters.png)
+![Swarm.png](_images/swarms/Swarm-clusters.png)
 
 **群集群：** 在多机器上运行一个镜像的多个实例，并且每个节点又可以运行同一镜像的多个实例
 <!--endsec-->
