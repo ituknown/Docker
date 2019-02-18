@@ -429,4 +429,184 @@ $ docker volume rm nginx-vol
 
 # 多机器之间数据分享
 
-未完待续~
+当需要构建一个具有容错性的应用时，你可能需要配置一个具有多个实例的服务，并且这些实例之间能够访问相同的文件。
+
+![volumes-shared-storage.svg](./_images/volumes-shared-storage.svg)
+
+有一下几种方式可以实现如上图所示的应用部署。
+
+- 为应用程序增加逻辑，以将文件存储在云对象存储系统上（如：`Amazon S3`）。
+- 使用支持将文件写入诸如 NFS 或 Amazon S3 等外部存储系统的卷（`volumes`）驱动程序的卷。
+
+卷驱动程序允许你从应用程序中抽象底层存储系统。例如，如果你的服务使用 `NFS` 驱动程序的卷，那你可以使用其他驱动程序更新服务。譬如在云存储数据，而无需更改应用程序的逻辑。
+
+# 使用卷驱动程序
+
+当你使用 `docker volume create` 命令创建卷（`volumes`）或者当你运行一个容器并且绑定还未创建的卷时，你可以指定一个卷驱动程序。下面的示例中使用的是 `vieux/sshfs` 卷驱动程序，开始创建爱你一个独立卷，然后当启动容器时创建一个新卷。
+
+## 初始设置
+
+假设你有两个节点，第一个节点是 Docker 主机，可以使用 SSH 连接到第二个节点。
+
+在 Docker 主机上，安装 `vieux/sshfs` 插件：
+
+```
+$ docker plugin install --grant-all-permissions vieux/sshfs
+```
+
+示例：
+
+```
+$ docker plugin install --grant-all-permissions vieux/sshfs
+
+latest: Pulling from vieux/sshfs
+52d435ada6a4: Download complete 
+Digest: sha256:1d3c3e42c12138da5ef7873b97f7f32cf99fb6edde75fa4f0bcf9ed277855811
+Status: Downloaded newer image for vieux/sshfs:latest
+Installed plugin vieux/sshfs
+
+$ docker plugin ls
+
+ID                  NAME                 DESCRIPTION               ENABLED
+98bfb9819e91        vieux/sshfs:latest   sshFS plugin for Docker   true
+```
+
+## 使用卷驱动程序创建卷
+
+该示例需要指定 SSH 密码，不过如果两台主机之间有分享 keys 配置。则可以免密码登录。每个卷驱动程序都有 0 或多个参数配置，每个配置需要使用 `-o` 参数进行指定，命令如下：
+
+```
+$ docker volume create --driver vieux/sshfs \
+  -o sshcmd=test@node2:/home/test \
+  -o password=testpassword \
+  sshvolume
+```
+
+笔者使用的另一台主机是 `192.168.1.14`，使用 `root` 用户进行登录：
+
+```
+$ docker volume create --driver vieux/sshfs \
+  -o sshcmd=root@192.168.1.14:/root \
+  -o password=MinGRn97 \
+  sshvolume
+
+sshvolume
+```
+
+命令执行完成后看到创建了一个卷 `sshvolume`。可以在机器上执行卷监测命令查看卷信息：
+
+```
+$ docker volume inspect sshvolume
+[
+    {
+        "CreatedAt": "0001-01-01T00:00:00Z",
+        "Driver": "vieux/sshfs:latest",
+        "Labels": {},
+        "Mountpoint": "/mnt/volumes/1124f8042e7a222fb71202f4f1243f13",
+        "Name": "sshvolume",
+        "Options": {
+            "password": "MinGRn97",
+            "sshcmd": "root@192.168.1.14:/root"
+        },
+        "Scope": "local"
+    }
+]
+```
+
+可以看到，在卷的 `Options` 中有你配置的 SSH 登录信息。
+
+## 启动一个使用卷驱动程序创建卷的容器
+
+同样的，你需要使用 SSH 登录到另一台主机，如果主机之间已经共享 `keys` 则不需要设置登录密码了。每个卷驱动程序都有 0 个或多个配置参数。**如果卷驱动程序要求你传递选项，则必须使用 `--mount` 而不是 `-v` 选项。
+
+```
+$ docker run -d \
+  --name sshfs-container \
+  --volume-driver vieux/sshfs \
+  --mount src=sshvolume,target=/app,volume-opt=sshcmd=test@node2:/home/test,volume-opt=password=testpassword \
+  nginx:latest
+```
+
+同样的，笔者使用 `192.168.1.14` 主机的 `root` 用户。所以命令如下：
+
+```
+$ docker run -d \
+  --name sshfs-container \
+  --volume-driver vieux/sshfs \
+  --mount src=sshvolume,target=/app,volume-opt=sshcmd=root@192.168.1.14:/root,volume-opt=password=MinGRn97 \
+  nginx:latest
+```
+
+输出结果如下：
+
+```bash
+$  docker run -d \
+   --name sshfs-container \
+   --volume-driver vieux/sshfs \
+   --mount src=sshvolume,target=/app,volume-opt=sshcmd=root@192.168.1.14:/root,volume-opt=password=MinGRn97 \
+   nginx:latest
+
+WARN[0000] `--volume-driver` is ignored for volumes specified via `--mount`. Use `--mount type=volume,volume-driver=...` instead. 
+5327a73f60b578361f713305984455d6e791d750ffcf624d374aa6ce6346d1b9
+```
+
+# 卷数据备份、恢复和迁移
+
+卷对备份、还原和迁移很有用。使用 `--volumes-from` 标志创建一个安装该卷的新容器。
+
+## 备份容器
+
+- 启动一个新容器从 `dbstore` 容器装入卷
+- 将本机主机目录挂载为 `/backup`
+- 将包含 `dndate` 卷内容的命令传递到 `/backup` 目录中的 `backup.tar` 文件
+
+```bash
+$ docker run --rm --volumes-from dbstore -v $(pwd):/backup ubuntu tar cvf /backup/backup.tar /dbdata
+```
+
+当命令执行完成后容器将会停止，并且留下了 `dbdata` 卷的备份。
+
+## 从备份中还原容器
+
+就刚备份的 `dbtate` 而言，我们可以还原数据导到同一个容器或者恢复到另一个容器中。
+
+例如，创一个新容器 `dbstore2`：
+
+```bash
+$ docker run -v /dbdata --name dbstore2 ubuntu /bin/bash
+```
+
+然后解压缩新容器的数据卷中的备份文件：
+
+```bash
+$ docker run --rm --volumes-from dbstore2 -v $(pwd):backup ubuntu bash -c "cd /dbdata && tar xvf /backup/backup.tar --strip 1"
+```
+
+你可以使用上述技术使用首选工具自动执行备份，迁移和还原测试。
+
+# 删除卷
+
+当 docker 容器删除时，volume 就会持久化保存，并不会删除。卷有如下两种类型：
+
+- **命名卷** 在容器外有一个特定的源表单，如 `awesome:/bar`。
+- **匿名卷** 没有特定的源，所以当容器删除时，指示 Docker Engine 守护程序删除他们。
+
+## 删除匿名卷
+
+使用 `--rm` 参数会自动删除匿名卷。例如，有一个匿名卷 `/foo`，当你的容器删除时，Docker Engine 会自动删除 `/foo` 而不是 `awesome` 卷：
+
+```bash
+$ docker run --rm -v /foo -v awesome:bar busybox top
+```
+
+## 删除所有卷
+
+要删除所有未使用的卷并释放空间使用如下命令即可：
+
+```bash
+$ docker volume prune
+```
+
+---
+
+>**说明：** 以上内容翻译至官网文档，笔者还没有进行省层次试验测试。
