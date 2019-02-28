@@ -18,7 +18,7 @@ $ sudo curl -L "https://github.com/docker/compose/releases/download/1.23.1/docke
 命令执行示例：
 
 ```
-[root@localhost ~]# sudo curl -L "https://github.com/docker/compose/releases/download/1.23.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+$ sudo curl -L "https://github.com/docker/compose/releases/download/1.23.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
 100   617    0   617    0     0    683      0 --:--:-- --:--:-- --:--:--   683
@@ -40,7 +40,7 @@ $ docker-compose --version
 命令执行示例：
 
 ```
-[root@localhost ~]# docker-compose --version
+$ docker-compose --version
 docker-compose version 1.23.1, build b02f1306
 ```
 
@@ -96,7 +96,7 @@ $ docker-swarm init
 命令执行示例：
 
 ```
-[root@localhost ~]# docker swarm init
+$ docker swarm init
 Swarm initialized: current node (zijckbg21bygtehzlameaa0t8) is now a manager.
 
 To add a worker to this swarm, run the following command:
