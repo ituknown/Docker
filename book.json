@@ -24,7 +24,7 @@
 	],
 	"pluginsConfig": {
 		"tbfed-pagefooter": {
-			"copyright":"Copyright &copy MinGRn 2018",
+			"copyright":"Copyright &copy MinGRn 2018 Base On Docker v18.09",
 			"modify_label": "最近修订时间：",
 			"modify_format": "YYYY-MM-DD"
 		},
