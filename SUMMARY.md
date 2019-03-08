@@ -48,10 +48,11 @@
 
 ### 应用数据管理篇
 
-* [存储概述](./docs/manage-application-data/storage-overview.md)
-* [卷 volumes](./docs/manage-application-data/use-volumes.md)
-* [绑定 mounts](./docs/manage-application-data/bind-mounts.md)
-
+* [容器外部数据存储]()
+  + [存储概述](./docs/manage-application-data/external-storage/storage-overview.md)
+  + [卷 volumes](./docs/manage-application-data/external-storage/use-volumes.md)
+  + [绑定 mounts](./docs/manage-application-data/external-storage/bind-mounts.md)
+* [容器内部数据存储]()
 ---
 
 ### 线上运行篇

@@ -18,6 +18,7 @@
 
 .book-summary ul.summary li.active > a {
     color: #26CB7C;
+    font-weight: bolder;
 }
 
 /* 内容样式 */
