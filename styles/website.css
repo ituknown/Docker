@@ -21,6 +21,11 @@
     font-weight: bolder;
 }
 
+/* 正文最大宽度 */
+.page-inner {
+    max-width: 850px;
+}
+
 /* 内容样式 */
 .markdown-section a {
     color: #26CB7C;

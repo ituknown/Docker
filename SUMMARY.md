@@ -51,7 +51,8 @@
 * [容器外部数据存储]()
   + [存储概述](./docs/manage-application-data/external-storage/storage-overview.md)
   + [卷 volumes](./docs/manage-application-data/external-storage/use-volumes.md)
-  + [绑定 mounts](./docs/manage-application-data/external-storage/bind-mounts.md)
+  + [bind 挂载](./docs/manage-application-data/external-storage/bind-mounts.md)
+  + [tmpfs 挂载](./docs/manage-application-data/external-storage/tmpfs-mounts.md)
 * [容器内部数据存储]()
 ---
 
