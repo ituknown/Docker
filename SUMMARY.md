@@ -48,12 +48,12 @@
 
 ### 应用数据管理篇
 
-* [容器外部数据存储]()
-  + [存储概述](./docs/manage-application-data/external-storage/storage-overview.md)
-  + [卷 volumes](./docs/manage-application-data/external-storage/use-volumes.md)
-  + [bind 挂载](./docs/manage-application-data/external-storage/bind-mounts.md)
-  + [tmpfs 挂载](./docs/manage-application-data/external-storage/tmpfs-mounts.md)
-* [容器内部数据存储]()
+* [数据挂载](docs/manage-application-data/data-mounts/README.md)
+  + [存储概述](docs/manage-application-data/data-mounts/storage-overview.md)
+  + [卷 volumes](docs/manage-application-data/data-mounts/use-volumes.md)
+  + [bind 挂载](docs/manage-application-data/data-mounts/bind-mounts.md)
+  + [tmpfs 挂载](docs/manage-application-data/data-mounts/tmpfs-mounts.md)
+* [存储驱动](docs/manage-application-data/storage-driver/README.md)
 ---
 
 ### 线上运行篇
