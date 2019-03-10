@@ -54,6 +54,8 @@
   + [bind 挂载](docs/manage-application-data/data-mounts/bind-mounts.md)
   + [tmpfs 挂载](docs/manage-application-data/data-mounts/tmpfs-mounts.md)
 * [存储驱动](docs/manage-application-data/storage-driver/README.md)
+  + [驱动选择](docs/manage-application-data/storage-driver/driver-select.md)
+  + [overlayFS 驱动](docs/manage-application-data/storage-driver/overlayFS-driver.md)
 ---
 
 ### 线上运行篇
