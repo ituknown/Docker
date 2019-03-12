@@ -45,7 +45,7 @@ Linux 3.10.0-957.5.1.el7.x86_64
 $ sudo systemctl stop docker
 ```
 
-- 备份原始 Docker 目录（必须操作！在使用任何驱动程序都应该讲原始加以备份）
+- 备份原始 Docker 目录（必须操作！在使用任何驱动程序都应该将原始加以备份）
 
 ```
 $ cp -au /var/lib/docker /var/lib/docker.bk
@@ -60,7 +60,7 @@ $ cp -au /var/lib/docker /var/lib/docker.bk
 }
 ```
 
-> 如果使用 `overlay` 驱动这里讲 `overlay2` 替换即可：
+> 如果使用 `overlay` 驱动这里将 `overlay2` 替换即可：
 ```json
 {
   "storage-driver": "overlay"
@@ -278,4 +278,70 @@ $ cat /var/lib/docker/overlay/ec444863a55a9f1ca2df72223d459c5d940a721b2288ff86a3
 
 `work` 目录是OverlayFS的内部。
 
-# 容器读写如何与 overlayFS 工作
+# 容器读写如何与 overlayFS 协作
+
+<!--sec data-title="读文件" data-id="section1" data-show=true ces-->
+容器层读取文件有如下三个场景：
+
+- **文件仅存在于镜像层**
+
+如果容器要读取的文件不存在于容器层（`upperdir`）则会从镜像层（`lowerdir`） 中进行读取，这样做就只会有很小的性能开销。
+
+- **文件仅存在于容器层**
+
+如果容器层要访问读取的文件在容器层（`upperdir`）中而不是在镜像层（`lowerdir`）中，则会直接在容器层中进行访问。
+
+- **文件同时存在于容器和镜像层中**
+
+如果容器层（`upperdir`）要访问的文件同时存在于镜像层（`lowerdir`）中，则容器层中的文件会 *覆盖*（或者说隐藏）镜像中的同名文件。
+<!--endsec-->
+
+<!--sec data-title="写文件" data-id="section2" data-show=true ces-->
+同样，容器层写文件也会存在如下几种场景：
+
++ **容器层第一次写文件**
+
+如果容器层第一次写某个文件，该文件并不存在于容器层（`upperdir`）而是在镜像层（`lowerdir`）中。那么 `overlay2` 或 `overlay` 驱动会使用
+`copy_up` 操作将镜像中的文件的一个副本拷贝到容器层中。容器层中修改该文件时修改的是被拷贝到容器层中的一个副本，镜像层中的原始文件不会做任何修改。
+不过，`OverlayFS` 是文件级别操作而不是块级别操作。意思就是说 `OverlayFS` 使用 `copy_up` 操作会将完整的文件拷贝到容器层中（即使你要修改的
+内容很小但是文件很大），这就会严重的影响到性能问题。你需要注意如下两点：
+  
++  - `copy_up` 操作仅在第一次写入给定文件时发生。对同一文件的后续写入操作将对已经复制到容器的文件的副本进行操作。
++  - `OverlayFS` 仅适用于两层。这意味着性能应该优于 `AUFS`，当搜索具有许多层的图像中的文件时，`AUFS` 会出现明显的延迟。这是 `overlay` 
+  和 `overlay2` 驱动程序的优势。不过 `overlayfs2` 在初始读取时的性能略低于 `overlayfs` ，因为它会在查找多层时进行缓存。
+<!--endsec-->
+
+<!--sec data-title="删除文件或目录" data-id="section3" data-show=true ces-->
+- 在容器中删除文件时，会在容器（`upperdir`）中创建一个 `whiteout` 文件。并不会删除镜像层（`lowerdir`）中的文件（因为`lowerdir`是只读的）。
+不过，如果容器想要再次读取该文件时 `whiteout` 文件阻止该操作，因为该文件（容器中的副本）已经被删除了。
+- 在容器中删除目录时，会在容器（`upperdir`）中创建一个 `opaque directory` 目录。与 `whiteout` 文件的工作方式相同，并且有效地防止了目录被
+再次访问，虽然它实际上仍然存在于图像（`lowerdir`）中。
+<!--endsec-->
+
+<!--sec data-title="文件重命名" data-id="section4" data-show=true ces-->
+仅当源路径和目标路径都位于顶层时，才允许为目录调用 `rename（2）`。否则，会返回 `EXDEV` 错误（不允许跨设备链接）。所以你的应用程序需要设计为
+处理 `EXDEV` 并回退到 复制和取消链接(`copy and unlink`) 策略。
+<!--endsec-->
+
+# OverlayFS 的性能问题
+
+`overlay2` 和 `overlay` 驱动在性能方面都比 `aufs` 和 `devicemapper` 更加卓越。在有某些情况下，`overlay2` 的性能甚至比 `aufs` 的性能
+更好，即使如此你也需要注意如下几点：
+
+- **页面缓存**
+
+`OverlayFS` 支持页面缓存共享。访问同一文件的多个容器共享该文件的单个页面缓存条目。这就使得 `overlay` 和 `overlay2` 驱动程序对内存利用方面
+更加高效，并且是 `PaaS` 等高密度用例的良好选择。
+
+- **copy_up**
+
+与 `AUFS` 一样，只要容器第一次写入文件，`OverlayFS` 就会执行复制操作。这可能会增加写操作的延迟，尤其是对于大文件。但是，一旦文件被复制，对该
+文件的所有后续写入都发生在上层，而不需要进一步的复制操作。
+
+`OverlayFS` 的 `copy_up` 操作比使用 `AUFS` 的操作更快，因为 `AUFS` 支持的层数多于 `OverlayFS`，如果搜索多个 `AUFS` 层，则可能会产生更
+大的延迟。 `overlay2` 也支持多个层，但缓解了缓存带来的任何性能损失。
+
+- **节点限制**
+
+使用传统覆盖存储驱动程序可能会导致过多的节点索引（`inode`）消耗，尤其是当 Docker 主机上存在大量镜像和容器时。增加文件系统可用的 `inode` 
+数量的唯一方法是重新格式化它。为避免遇到此问题，强烈建你尽可能使用 `overlay2` 驱动。
