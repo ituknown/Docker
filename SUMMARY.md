@@ -56,6 +56,7 @@
 * [存储驱动](docs/manage-application-data/storage-driver/README.md)
   + [驱动选择](docs/manage-application-data/storage-driver/driver-select.md)
   + [overlayFS 驱动](docs/manage-application-data/storage-driver/overlayFS-driver.md)
+  + [aufs 驱动](docs/manage-application-data/storage-driver/aufs-driver.md)
 ---
 
 ### 线上运行篇

@@ -239,7 +239,7 @@ docker-ee.x86_64      2.1.ee.2-1.el7.centos      docker-ee-stable-18.09
 此列表的内容取决于启用了哪些镜像仓库，并且将特定于您的 CentOS 版本（在本示例中，由版本中的 .el7 后缀表示）。选择一个特定版本进行安装。第二列为版本字符串。第三列为镜像仓库名称，它表示软件包来自哪个镜像仓库并按扩展其稳定性级别列出。如需安装特定版本，请将版本字符串附加到软件包名称，并使用连字符 (-) 分隔它们：
 
 ```
-$ sudo yum install docker-ee-<VERSION>
+$ sudo yum install -y docker-ee-<VERSION>
 ```
 
 编辑 `/etc/docker/daemon.json`。如果不存在该文件，需要进行创建。如果文件已存在，将下面内容添加进去：

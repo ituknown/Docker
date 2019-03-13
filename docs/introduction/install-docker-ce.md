@@ -204,7 +204,7 @@ $ sudo yum-config-manager --disable docker-ce-edge
 **安装最新版本：**
 
 ```
-$ sudo yum install docker-ce
+$ sudo yum install -y docker-ce
 ```
 
 这种方式总是安装最新版本，如果想安装指定版本使用下面安装方式：
@@ -250,7 +250,7 @@ docker-ce.x86_64            17.03.0.ce-1.el7.centos             docker-ce-stable
 可以看到列出部分版本，并且标识在后都进行标注版本的状态 `docker-ce-stable`。安装时只需要使用如下命令指定版本号即可：
 
 ```
-$ sudo yum install docker-ce-<VERSION>
+$ sudo yum install -y docker-ce-<VERSION>
 ```
 
 比如安装如下版本：
@@ -262,13 +262,13 @@ docker-ce.x86_64            18.03.0.ce-1.el7.centos             docker-ce-stable
 输入命令如下命令即可安装：
 
 ```
-$ sudo yum install docker-ce-18.03.0.ce-1
+$ sudo yum install -y docker-ce-18.03.0.ce-1
 ```
 
 如笔者直接安装最新版本示例：
 
 ```
-[root@localhost /]# sudo yum install docker-ce
+[root@localhost /]# sudo yum install -y docker-ce
 已加载插件：fastestmirror
 Loading mirror speeds from cached hostfile
  * base: mirrors.aliyun.com
@@ -298,8 +298,6 @@ Loading mirror speeds from cached hostfile
 
 总下载量：19 M
 安装大小：81 M
-Is this ok [y/d/N]: y'
-Is this ok [y/d/N]: y
 Downloading packages:
 (1/2): container-selinux-2.74-1.el7.noarch.rpm                                                                                                                        |  38 kB  00:00:00     
 (2/2): docker-ce-18.09.0-3.el7.x86_64.rpm                                                                                                                             |  19 MB  00:00:04     
