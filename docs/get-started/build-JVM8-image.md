@@ -1,4 +1,4 @@
-# 基于 CentOS 构建 JVM8 环境
+# 前言
 
 在前面已经详细介绍了 Dockerfile 文件指令与用法。本节就通过前文介绍的指令基于 centos 基础镜像构建 jvm8 环境。
 
@@ -13,7 +13,8 @@ $ docker search centos
 命令示例：
 
 ```
-[root@localhost /]# docker search centos
+$ docker search centos
+
 NAME                               DESCRIPTION                                     STARS               OFFICIAL            AUTOMATED
 centos                             The official build of CentOS.                   5032                [OK]                
 ansible/centos7-ansible            Ansible on Centos7                              119                                     [OK]
@@ -51,17 +52,16 @@ pivotaldata/centos7-build          CentosOS 7 image for GPDB compilation        
 现在进行创建一个 `centos-jvm8` 文件夹：
 
 ```
-[root@localhost v1]# mkdir centos-jvm8
-[root@localhost v1]# cd centos-jvm8/
-[root@localhost centos-jvm8]# ls
-[root@localhost centos-jvm8]# 
+$ mkdir centos-jvm8
+$ cd centos-jvm8/
+$ ls
 ```
 
 并将在 [Oracle 官网](https://www.oracle.com) 下载的 linux 版本 jvm8 上传至该文件夹：
 
 ```
-$  rz
-$  ls
+$ rz
+$ ls
 jdk-8u181-linux-x64.tar.gz
 ```
 
@@ -72,8 +72,8 @@ jdk-8u181-linux-x64.tar.gz
 在该文件夹下继续创建文件 `Dockerfile`：
 
 ```
-$  touch Dockerfile
-$  ls
+$ touch Dockerfile
+$ ls
 Dockerfile jdk-8u181-linux-x64.tar.gz
 ```
 
@@ -114,9 +114,9 @@ ENV PATH $PATH:$JAVA_HOME/bin
 
 这三个指令时配置基于基础镜像配置 JVM 环境变量。
 
-`ENV JAVA_HOME /opt/jvm/jdk1.8.0_181` 这里直接写 `jdk1.8.0_181` 的原因是 `jdk-8u181-linux-x64.tar.gz` 压缩包解压后的目录就是该目录。不行？你可以试试。
+`ENV JAVA_HOME /opt/jvm/jdk1.8.0_181` 这里直接写 `jdk1.8.0_181` 的原因是 `jdk-8u181-linux-x64.tar.gz` 压缩包解压后的目录就是该目录。不信？你可以试试。
 
-`ENTRYPOINT ["java", "-version"]` 指令是创建容器后的启动命令打印 jvm 版本信息。当然，也可以直接使用 `CMD` 指令，关于 `CMD` 与 `Entrypoint` 指令的区别见： [**RUN & CMD & Entrypoint**](./run-cmd-entrypoint.md)
+`ENTRYPOINT ["java", "-version"]` 指令是创建容器后的启动命令打印 jvm 版本信息。当然，也可以直接使用 `CMD` 指令，关于 `CMD` 与 `Entrypoint` 指令的区别见： [RUN & CMD & Entrypoint](./run-cmd-entrypoint.md)
 <!--endsec-->
 
 现在就可以执行指令进行构建镜像了。
@@ -126,7 +126,7 @@ ENV PATH $PATH:$JAVA_HOME/bin
 构建镜像指令是 `docker build` 具体如下：
 
 ```
-[root@localhost v1]# docker build --help
+$ docker build --help
 
 Usage:  docker build [OPTIONS] PATH | URL | -
 
@@ -174,7 +174,8 @@ $ docker build -t jvm8:v1.0.0 .
 命令执行示例：
 
 ```
-[root@localhost v1]# docker build -t jvm8:v1.0.0 .
+$ docker build -t jvm8:v1.0.0 .
+
 Sending build context to Docker daemon  185.7MB
 Step 1/7 : FROM centos
  ---> 1e1148e4cc2c
@@ -207,7 +208,8 @@ Successfully tagged jvm8:v1.0.0
 可以看到已经提示构建成功，并且 tag 是 `v1.0.0`。现在执行命令查看是否存在该镜像：
 
 ```
-[root@localhost v1]# docker images
+$ docker images
+
 REPOSITORY             TAG                 IMAGE ID            CREATED             SIZE
 jvm8                   v1.0.0              9ef7f38f2bf1        29 seconds ago      583MB
 ifkeeper/centos-jvm8   v1.0.0              e15334134272        18 hours ago        583MB
@@ -221,14 +223,15 @@ openjdk                latest              8e7eacedab93        4 days ago       
 
 ```
 $ docker run 9ef7f38f2bf1
-或者
+ or
 $ docker run jvm8:v1.0.0
 ```
 
 命令执行示例：
 
 ```
-[root@localhost v1]# docker run 9ef7f38f2bf1
+$ docker run 9ef7f38f2bf1
+
 java version "1.8.0_181"
 Java(TM) SE Runtime Environment (build 1.8.0_181-b13)
 Java HotSpot(TM) 64-Bit Server VM (build 25.181-b13, mixed mode)
@@ -251,7 +254,7 @@ Java HotSpot(TM) 64-Bit Server VM (build 25.181-b13, mixed mode)
 这里仓库的组织为 `ifkeeper`。现在回到命令，将构建的 `jvm8` 镜像进行打标签，打标签命令：
 
 ```
-[root@localhost centos-jvm8]# docker tag --help
+$ docker tag --help
 
 Usage:  docker tag SOURCE_IMAGE[:TAG] TARGET_IMAGE[:TAG]
 
@@ -261,8 +264,10 @@ Create a tag TARGET_IMAGE that refers to SOURCE_IMAGE
 命令示例：
 
 ```
-[root@localhost centos-jvm8]# docker tag jvm8:v1.0.0 ifkeeper/jvm8:v1.0.0
-[root@localhost centos-jvm8]# docker images
+$ docker tag jvm8:v1.0.0 ifkeeper/jvm8:v1.0.0
+
+$ docker images
+
 REPOSITORY             TAG                 IMAGE ID            CREATED             SIZE
 ifkeeper/jvm8          v1.0.0              9ef7f38f2bf1        18 minutes ago      583MB
 jvm8                   v1.0.0              9ef7f38f2bf1        18 minutes ago      583MB
@@ -275,7 +280,7 @@ jvm8                   v1.0.0              9ef7f38f2bf1        18 minutes ago   
 现在，进行登录 Docker Hub，登录命令如下：
 
 ```
-[root@localhost centos-jvm8]# docker login --help
+$ docker login --help
 
 Usage:  docker login [OPTIONS] [SERVER]
 
@@ -290,7 +295,8 @@ Options:
 笔者由于之前已经登陆过，这里直接输入命令 `docker login` 即可登录，如下：
 
 ```
-[root@localhost centos-jvm8]# docker login
+$ docker login
+
 Authenticating with existing credentials...
 WARNING! Your password will be stored unencrypted in /root/.docker/config.json.
 Configure a credential helper to remove this warning. See
@@ -302,7 +308,7 @@ Login Succeeded
 现在登录成功，就将镜像推送至仓库。推送命令：
 
 ```
-[root@localhost centos-jvm8]# docker push --help
+$ docker push --help
 
 Usage:  docker push [OPTIONS] NAME[:TAG]
 
@@ -315,7 +321,8 @@ Options:
 命令执行示例：
 
 ```
-[root@localhost centos-jvm8]# docker push ifkeeper/jvm8:v1.0.0
+$ docker push ifkeeper/jvm8:v1.0.0
+
 The push refers to repository [docker.io/ifkeeper/jvm8]
 2c218a57b7e7: Pushed 
 071d8bd76517: Mounted from ifkeeper/centos-jvm8 
@@ -333,7 +340,7 @@ v1.0.0: digest: sha256:dc3c695f49433ddbc8b821bd5b0019b370ff56d338f8885c6b336780f
 现在可以通过 `docker inspect` 命令查看镜像构建信息，该命令信息如下：
 
 ```
-[root@localhost centos-jvm8]# docker inspect --help
+$ docker inspect --help
 
 Usage:  docker inspect [OPTIONS] NAME|ID [NAME|ID...]
 
@@ -348,7 +355,7 @@ Options:
 命令执行示例：
 
 ```
-[root@localhost centos-jvm8]# docker inspect 9ef7f38f2bf1
+$ docker inspect 9ef7f38f2bf1
 [
     {
         "Id": "sha256:9ef7f38f2bf11b5741b92eb48f3fa8f6a1bdc1a4a4d7102e2e601f6f2f440461",
