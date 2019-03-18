@@ -1,14 +1,17 @@
-# Dockerfile 说明
+# 前言
 
-在实际使用中镜像构建都是通过 Dockerfile 进行构建。Dockerfile 是由一系列命令和参数构成的脚本，这些命令应用于基础镜像并最终创建一个新的镜像。它们简化了从头到尾的流程并极大的简化了部署工作。Dockerfile 从 `FROM` 命令开始，紧接着跟随者各种方法，命令和参数。其产出为一个新的可以用于创建容器的镜像。
+在实际使用中镜像构建都是通过 Dockerfile 进行构建。Dockerfile 是由一系列命令和参数构成的脚本，这些命令应用于基础镜像并最终创建一个新的镜像。它
+们简化了从头到尾的流程并极大的简化了部署工作。Dockerfile 从 `FROM` 命令开始，紧接着跟随者各种方法，命令和参数。其产出为一个新的可以用于创建容器
+的镜像。
 
-Dockerfile 文件主要定义容器内的环境中发生的事情。比如对网络接口和磁盘驱动器等资源的访问是在此环境中都是虚拟化的，该环境与系统的其他部分是隔离的，因此需要将端口映射到外部世界，并具体说明希望将哪些文件 **复制到** 该环境。
+Dockerfile 文件主要定义容器内的环境中发生的事情。比如对网络接口和磁盘驱动器等资源的访问是在此环境中都是虚拟化的，该环境与系统的其他部分是隔离的，
+因此需要将端口映射到外部世界，并具体说明希望将哪些文件 **复制到** 该环境。
 
 **注意：** Dockerfile 是一个文件！
 
 下面就来看下 Dockerfile 中语法的使用：
 
-# Dockerfile 简单示例
+# 简单示例
 
 在看具体语法与命令之前先看一个简单的栗子，该栗子 Dockerfile 内容如下所示：
 
@@ -52,10 +55,10 @@ CMD /use/sbin/njinx
 <!--endsec-->
 
 
-# Dockerfile 指令
+# 指令集
 
-从上面的栗子中的 `FROM ubuntu`、`RUN echo ..` 等语句不难看出，Dockerfile 指令一般格式为 `INSTRUCTION arguments`，而这些指令包括 `FROM`、`MAINTAINER`、`RUN` 等指令，下面就将最为常用的指令介绍下：
-
+从上面的栗子中的 `FROM ubuntu`、`RUN echo ..` 等语句不难看出，Dockerfile 指令一般格式为 `INSTRUCTION arguments`，而这些指令包括
+`FROM`、`MAINTAINER`、`RUN` 等指令，下面就将最为常用的指令介绍下：
 
 <!--sec data-title="FROM 指令" data-id="section1" data-show=true ces-->
 格式为： `FROM <image>` 或 `FROM <image[:tag]>`
@@ -100,9 +103,8 @@ CMD /use/sbin/njinx
 如果和 `host` 共享目录，Dockerfile 中必须先创建一个挂载点，然后在启动容器的时候通过如下命令来设置，其中 `CONTAINERPATH` 就是创建的挂载挂载点。
 
 ```
-docker run -v $HOSTPATH:$CONTAIERPATH
+$ docker run -v $HOSTPATH:$CONTAIERPATH
 ``` 
-
 <!--endsec-->
 
 <!--sec data-title="ENV 指令" data-id="section7" data-show=true ces-->
@@ -115,7 +117,8 @@ docker run -v $HOSTPATH:$CONTAIERPATH
 <!--sec data-title="RUN 指令" data-id="section8" data-show=true ces-->
 格式为：`RUN <command>` 或 `RUN ["executable","param1","param2" ...]`
 
-`RUN` 指令是用来执行 `shell` 命令的。当解析 Dockerfile 时，遇到 `RUN` 指令，Dockerfile 会将该命令翻译为 `/bin/sh -c "XXX"`，其中 `XXX` 为 `RUN` 指令后的 `shell` 命令。
+`RUN` 指令是用来执行 `shell` 命令的。当解析 Dockerfile 时，遇到 `RUN` 指令，Dockerfile 会将该命令翻译为 `/bin/sh -c "XXX"`，其中
+`XXX` 为 `RUN` 指令后的 `shell` 命令。
 <!--endsec-->
 
 
@@ -123,6 +126,19 @@ docker run -v $HOSTPATH:$CONTAIERPATH
 格式为：`EXPOSE <port>[<port> ...]`
 
 该指令用来将容器的端口暴露出来，也可以通过 `docker run -p` 指令实现和服务器端口的映射。
+
+示例：
+
+```
+# 暴露 TCP
+EXPOSE 80/tcp
+
+# 暴露 UDP
+EXPOSE 80/udp
+
+或者
+$ docker run -p 80:80/tcp -p 80:80/udp
+```
 <!--endsec-->
 
 
@@ -133,7 +149,8 @@ docker run -v $HOSTPATH:$CONTAIERPATH
 - `CMD executable param1 param2 ...` 在 `/bin/sh` 中执行，提供给需要交互的应用。
 - `CMD ["param1", "param2" ...]` 提供给 `ENTRYPOINT` 的默认参数。
 
-`CMD` 指令是指定启动容器时执行的命令，每个 Dockerfile 只能有一条 `CMD` 指令。如果指定多条 `CMD` 指令，只有最后一条会被执行。指的说明的是，如果用户启动容器时指定了运行的命令，则会覆盖掉 `CMD` 指定的命令。具体原因见：[**RUN & CMD & Entrypoint**](./run-cmd-entrypoint.md)。
+`CMD` 指令是指定启动容器时执行的命令，每个 Dockerfile 只能有一条 `CMD` 指令。如果指定多条 `CMD` 指令，只有最后一条会被执行。指的说明的是，
+如果用户启动容器时指定了运行的命令，则会覆盖掉 `CMD` 指定的命令。具体原因见：[RUN & CMD & Entrypoint](./run-cmd-entrypoint.md)。
 <!--endsec-->
 
 
@@ -143,21 +160,80 @@ docker run -v $HOSTPATH:$CONTAIERPATH
 - `ENTRYPOINT ["executable", "param1", "param2" ...]` 使用 `exec` 执行，推荐方式。
 - `ENTRYPOINT executable param1 param2 ...` 在 `/shell` 中执行。
 
-`ENTRYPOINT` 指令与 `CMD` 指令相同都是用于指定启动容器时执行的命令。但是该指令与 `CMD` 指令有些区别，具体见 [**RUN & CMD & Entrypoint**](./run-cmd-entrypoint.md)。同样的，每个 Dockerfile 只能有一条 `ENTRYPOINT` 指令。如果指定多条 `ENTRYPOINT` 指令，只有最后一条会被执行。
+`ENTRYPOINT` 指令与 `CMD` 指令相同都是用于指定启动容器时执行的命令。但是该指令与 `CMD` 指令有些区别，具体见
+[RUN & CMD & Entrypoint](./run-cmd-entrypoint.md)。同样的，每个 Dockerfile 只能有一条 `ENTRYPOINT` 指令。如果指定多条
+`ENTRYPOINT` 指令，只有最后一条会被执行。
 <!--endsec-->
 
+# 镜像构建
 
+上面主要介绍 Dockerfile 中的指令集，在实际应用中需要注意 `CMD` 和 `Entrypoint` 指令集的使用。关于之间的区别你可以参考 [RUN & CMD & Entrypoint](./run-cmd-entrypoint.md)，
+本篇是国外作者文章，这里直接进行摘录。因为该文章介绍的特别详细和清晰，所以笔者并没有进行翻译。
 
+以上如果否理解后这里就说下如何基于 Dockerfile 进行构建镜像。Dockerfile 是一个文件，并没有任何后缀名，其实就是使用如下命令进行创建的：
 
+```
+$ touch Dockerfile
 
+$ ls
+Dockerfile
+```
 
+在该文件中即可编写自己的应用，具体见上面示例。下面就说下编写完成后如何进行构建镜像！
 
+Dockerfile 镜像构建指令是：
 
+```
+$ docker build .
+```
 
+其中 `.` 表示当前目录，执行该命令需要在 Dockerfile 同级目录，即：
 
+```
+$ ls
+Dockerfile
 
+$ docker build .
+```
 
+另外，如果 Dockerfile 在另外一个文件夹中可以指定 `-f` 参数。如 Dockerfile 所在目录是 `/home/docker/`，则执行命令为：
 
+```
+$ ls /home/docker/
+Dockerfile
 
+$ pwd
+/home/data
 
+# 执行命令
+$ docker build -f /home/docker/Dockerfile .
+```
 
+除此之外，你还可以为构建的镜像使用 `-t` 参数指定标签（也可以理解为名称）：
+
+```
+$ docker build -t itumate/myapp .
+```
+
+这里使用的标签为 `itumate/myapp`，这是一个标准的标签。即 `itumate` 其实是 DockerHub 的组织名称，`myapp` 是 `itumate` 组织下的一个镜像。
+使用该命令构建完成的镜像可以直接推送到远程仓库。
+
+不过，使用该命令构建的没有指定具体版本。docker 会理解它是一个 *dangling* 镜像。所以，这里可以为该镜像指定标签版本好：
+
+```
+$ docker build -t itumate/myapp:v1.0.0 .
+ or
+$ docker build -t itumate/myapp:1.0.0 .
+```
+
+版本号可以随意指定，不一定是数字。还有一点需要说明，版本号还可以指定为 `latest` 版本，如下所示。但尽量不要使用该命令，还是使用上面的那种形式比较好：
+
+```
+$ docker build -t itumate/myapp:latest .
+```
+
+# 总结
+
+本篇只是简单介绍下 Dockerfile 的使用，介绍的指令集也是最常用的。除此之外，还有许多其他指令集。比如创建 `.dockerignore`。
+
+想了解更多指令信息可以参考：[Dockerfile 指令集官网](https://docs.docker.com/engine/reference/builder/)

@@ -13,13 +13,13 @@
 
 # --tmpfs 和 --mount
 
-一直以来，`--tmpfs` 主要应用于独立容器，而 `--mount` 主要应用与 `swarm` 服务集群。自 Docker `v17.06` 之后，`--mount` 同样可以在独立容
-器中使用。 `--mount` 语法更加清晰和益于理解，它与 `--tmpfs` 最大的不同是：`--tmpfs` 不支持任何可配置选项！
+之前，`--tmpfs` 语法主要应用于独立容器，而 `--mount` 语法主要应用与 `swarm` 服务集群。自 Docker `v17.06` 之后，`--mount` 同样可以在独
+立容器中使用。 `--mount` 语法更加清晰和益于理解，它与 `--tmpfs` 最大的不同是：`--tmpfs` 语法不支持任何可配置选项！
 
-+ `--tmpfs`：`tmpfs` 挂载不允许你指定任何配置选项，并且只能应用在独立容器。
-+ `--mount`：由多个键值对组成，用逗号分隔，每个键值对由一个 `<key>=<value>` 元组组成。有如下几个配置项：
++ `--tmpfs`：语法不允许你指定任何配置选项，并且只能应用在独立容器。
++ `--mount`：语法由多个键值对组成，用逗号分隔，每个键值对由一个 `<key>=<value>` 元组组成。有如下几个配置项：
   - `type`：`mount` 类型，有 `bind`、`vulome` 和 `tmpfs`，本节介绍 `tmpfs`。
-  - `destination`：将 `tmpfs` 挂载在容器中的路径，也可以使用 `dst` 和 `target` 替换 `destination`。
+  - `destination`：将 `tmpfs` 挂载到容器中的路径，也可以使用 `dst` 和 `target` 代替 `destination`。
   - `tmpfs-type` 和 `tmpfs-mode` 见下文。
   
 # --tmpfs 和 --mount 的行为差异
@@ -33,7 +33,7 @@
 的组合选项实现 `tmpfs` 挂载。`tmpfs` 挂载没有 `source`，见下面一个示例，分别使用 `--mount` 和 `--tmpfs` 在 `Nginx` 容器中创建一个
 `tmpfs` 挂载，挂载在容器的 `/app` 目录。
 
-<!--sec data-title="--mount 示例" data-id="section0" data-show=true ces-->
+<!--sec data-title="使用 --mount 语法" data-id="section0" data-show=true ces-->
 ```
 $ docker run -d \
   -it \
@@ -43,7 +43,7 @@ $ docker run -d \
 ```
 <!--endsec-->
 
-<!--sec data-title="--tmpfs 示例" data-id="section1" data-show=true ces-->
+<!--sec data-title="使用 --tmpfs 语法" data-id="section1" data-show=true ces-->
 ```
 $ docker run -d \
   -it \
@@ -78,8 +78,8 @@ $ docker container rm tmptest
 
 # tmpfs 选项
 
-`tmpfs` 挂载有如下两个选项，两个都不是必须选项，如果想要指定如下选项只能使用 `--mount`，`--tmpfs` 不支持任何选项！因此，即使使用 `tmpfs`
-挂载，也推荐使用 `--mount type=tmpfs` 替代 `--tmpfs`。
+`tmpfs` 挂载有如下两个选项，两个都不是必须选项，如果想要指定如下选项只能使用 `--mount` 语法，`--tmpfs` 不支持任何选项！因此，即使使用 `tmpfs`
+挂载，也推荐使用 `--mount` 替代 `--tmpfs`。
 
 |选项|说明|
 |:--:|--|
@@ -98,5 +98,8 @@ $ docker run -d \
 
 # 总结
 
-`tmpfs` 挂载的实现方式有 `--tmpfs` 和 `--mount type=tmpfs` 两种。`--tmpfs` 不支持任何配置选项，并且只能应用与独立容器。所以，在使用 `tmpfs`
-挂载时 `--mount type=tmpfs` 是推荐的实现方式！
+`tmpfs mount` 与 `volume` 或 `bind mount` 相比。`tmpfs` 无法容器产生的数据进行持久化到硬盘中，而是将数据暂存在内存中。得益于 `tmpfs` 的
+特性，可以使用 `tmpfs` 存储容器的产生的敏感数据。当容器终止时 `tmpfs` 保存的数据也一并被删除。所以，应该合理的使用 `tmpfs`。
+
+实现 `tmpfs` 存储的方式有 `--tmpfs` 和 `--mount` 两种语法。`--tmpfs` 语法不支持任何配置选项，并且只能应用与独立容器。而 `--mount` 语法
+支持配置选项，并且语法更加清晰简单。所以，在实现 `tmpfs` 挂载时，`--mount` 是推荐使用的语法。

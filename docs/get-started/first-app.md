@@ -117,7 +117,7 @@ ENTRYPOINT ["java", "-jar", "/app/docker-web-0.0.1.jar", "--server.port=80"]
 现在可以看到该文件夹下只有这两个文件：
 
 ```
-[root@localhost docker-file]# ls
+$ ls
 Dockerfile  docker-web-0.0.1.jar
 ```
 
@@ -130,7 +130,8 @@ $ docker build -t <name>:<tag> .
 命令示例如下：
 
 ```
-[root@localhost docker-file]# docker build -t ifkeeper/web-test:v1.0.3 .
+$ docker build -t ifkeeper/web-test:v1.0.3 .
+
 Sending build context to Docker daemon  18.86MB
 Step 1/5 : FROM ifkeeper/jvm8:v1.0.0
 v1.0.0: Pulling from ifkeeper/jvm8
@@ -160,7 +161,7 @@ Successfully tagged ifkeeper/web-test:v1.0.3
 提示已经成功，现在查看镜像：
 
 ```
-[root@localhost docker-file]# docker images
+$ docker images
 REPOSITORY          TAG                 IMAGE ID            CREATED              SIZE
 ifkeeper/web-test   v1.0.3              930517912f6a        About a minute ago   602MB
 ```
@@ -174,7 +175,7 @@ ifkeeper/web-test   v1.0.3              930517912f6a        About a minute ago  
 运行示例：
 
 ```
-[root@localhost docker-file]# docker run -p "80:80" 930517912f6a
+$ docker run -p "80:80" 930517912f6a
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -198,7 +199,7 @@ $ docker run -p "80:80" -d 930517912f6a
 如果想要查看正在运行的容器，可以使用该命令：`docker ps`，如下所示：
 
 ```
-[root@localhost docker-file]# docker ps
+$ docker ps
 CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                NAMES
 192f2031ad54        930517912f6a        "java -jar /app/dock…"   7 minutes ago       Up 2 seconds        0.0.0.0:80->80/tcp   brave_dewdney
 ```
@@ -206,7 +207,7 @@ CONTAINER ID        IMAGE               COMMAND                  CREATED        
 如果想要查看全部容器（包括非运行中的容器）需要在该命令加 `-a`，如下所示：
 
 ```
-[root@localhost docker-file]# docker ps -a
+$ docker ps -a
 CONTAINER ID        IMAGE                      COMMAND                  CREATED             STATUS                       PORTS                NAMES
 192f2031ad54        930517912f6a               "java -jar /app/dock…"   8 minutes ago       Up 57 seconds                0.0.0.0:80->80/tcp   brave_dewdney
 2372f9a88fea        ifkeeper/web-test:v1.0.2   "java -jar /app/dock…"   2 hours ago         Exited (143) 9 minutes ago                        web_api.13.u2gptpndccc3scj7dtz17477n
@@ -233,7 +234,8 @@ $ docker login
 示例如下：
 
 ```
-[root@localhost ~]# docker push ifkeeper/web-test:v1.0.3
+$ docker push ifkeeper/web-test:v1.0.3
+
 The push refers to repository [docker.io/ifkeeper/web-test]
 65d87db336f8: Pushed 
 b5067df977d6: Pushed 

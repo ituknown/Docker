@@ -10,18 +10,11 @@
 
 ### 初试篇
 
-* [Dockerfile 详解](docs/build/Dockerfile.md)
-* [RUN & CMD & Entrypoiint](docs/build/run-cmd-entrypoint.md)
-* [基于 Centos 构建 JVM8](docs/build/build-JVM8-image.md)
-
----
-
-### 开始篇
-
 * [Docekr 定位](docs/get-started/Orientation.md)
 * [Docker 概述](docs/get-started/docker-overview.md)
 * [Docekr 容器](docs/get-started/Contaners.md)
-  + [Docekrfile 详解](docs/get-started/Dockerfile.md)
+  + [Docekrfile 简介](docs/get-started/Dockerfile.md)
+  + [RUN & CMD & Entrypoiint](docs/get-started/run-cmd-entrypoint.md)
   + [构建 JVM8 镜像](docs/get-started/build-JVM8-image.md)
   + [构建第一个应用](docs/get-started/first-app.md)
 * [Docker 服务](docs/get-started/Services.md)
@@ -56,6 +49,14 @@
   + [驱动选择](docs/manage-application-data/storage-driver/driver-select.md)
   + [overlayFS 驱动](docs/manage-application-data/storage-driver/overlayFS-driver.md)
   + [aufs 驱动](docs/manage-application-data/storage-driver/aufs-driver.md)
+---
+
+### 三剑客篇
+
+* [三剑客简介](docs/three-musketeers/README.md)
+* [三剑客之 Compose](docs/three-musketeers/compose.md)
+  + [Compose 安装](docs/three-musketeers/compose-install.md)
+
 ---
 
 ### 线上运行篇
