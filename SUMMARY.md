@@ -22,7 +22,7 @@
 * [Docker 概述](docs/get-started/docker-overview.md)
 * [Docekr 容器](docs/get-started/Contaners.md)
   + [Docekrfile 简介](docs/get-started/Dockerfile.md)
-  + [RUN & CMD & Entrypoiint](docs/build/run-cmd-entrypoint.md)
+  + [RUN & CMD & Entrypoiint](docs/get-started/run-cmd-entrypoint.md)
   + [构建 JVM8 镜像](docs/get-started/build-JVM8-image.md)
   + [构建第一个应用](docs/get-started/first-app.md)
 * [Docker 服务](docs/get-started/Services.md)
