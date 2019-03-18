@@ -48,7 +48,7 @@
 
 ### 应用数据管理篇
 
-* [数据持久化](docs/manage-application-data/data-mounts/README.md)
+* [数据挂载](docs/manage-application-data/data-mounts/README.md)
   + [volumes](docs/manage-application-data/data-mounts/use-volumes.md)
   + [bind mounts](docs/manage-application-data/data-mounts/bind-mounts.md)
   + [tmpfs mounts](docs/manage-application-data/data-mounts/tmpfs-mounts.md)
