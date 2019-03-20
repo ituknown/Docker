@@ -36,6 +36,7 @@ To add a manager to this swarm, run 'docker swarm join-token manager' and follow
 
 ```
 $ docker swarm join --token SWMTKN-1-18r6yasvao26coicfgzuuaalj9jjqhbml5soynuq6veho9dc6p-9kx5o04muohxh57o00t5za92y 192.168.31.131:2377
+
 This node joined a swarm as a worker.
 ```
 
@@ -47,6 +48,7 @@ This node joined a swarm as a worker.
 
 ```
 $ docker node ls
+
 ID                            HOSTNAME                STATUS              AVAILABILITY        MANAGER STATUS      ENGINE VERSION
 a5yy7q2vej26awg4u2oggsh2c *   localhost.localdomain   Ready               Active              Leader              18.09.0
 wmqub1palaexbolc8oagv596x     localhost.localdomain   Ready               Active                                  18.09.0
@@ -121,6 +123,7 @@ networks:
 
 ```
 $ docker stack deploy -c docker-stack-WITH-VISUALIZER.yml test
+
 Creating network test_webnet
 Creating service test_api
 Creating service test_visualizer
@@ -131,6 +134,7 @@ Creating service test_visualizer
 T1
 ```
 $ docker service ls
+
 ID                  NAME                    MODE                REPLICAS            IMAGE                             PORTS
 my5nlwo6t2v5        test_api          replicated          0/3                 ifkeeper/web-test:v1.0.3          *:80->80/tcp
 57rdpsjm06ds        test_visualizer   replicated          0/1                 dockersamples/visualizer:stable   *:8080->8080/tcp
@@ -139,6 +143,7 @@ my5nlwo6t2v5        test_api          replicated          0/3                 if
 T2
 ```
 $ docker service ls
+
 ID                  NAME                    MODE                REPLICAS            IMAGE                             PORTS
 my5nlwo6t2v5        test_api          replicated          2/3                 ifkeeper/web-test:v1.0.3          *:80->80/tcp
 57rdpsjm06ds        test_visualizer   replicated          0/1                 dockersamples/visualizer:stable   *:8080->8080/tcp
@@ -147,6 +152,7 @@ my5nlwo6t2v5        test_api          replicated          2/3                 if
 T3
 ```
 $ docker service ls
+
 ID                  NAME                    MODE                REPLICAS            IMAGE                             PORTS
 my5nlwo6t2v5        test_api          replicated          3/3                 ifkeeper/web-test:v1.0.3          *:80->80/tcp
 57rdpsjm06ds        test_visualizer   replicated          1/1                 dockersamples/visualizer:stable   *:8080->8080/tcp
@@ -159,6 +165,7 @@ my5nlwo6t2v5        test_api          replicated          3/3                 if
 管理节点
 ```
 $ docker ps
+
 CONTAINER ID        IMAGE                             COMMAND                  CREATED             STATUS              PORTS               NAMES
 02efb2b2560d        ifkeeper/web-test:v1.0.3          "java -jar /app/dock…"   3 minutes ago       Up 3 minutes                            test_api.3.l3bltodx2o7wx5tp6y2fcjwes
 0b48152f9a1a        dockersamples/visualizer:stable   "npm start"              3 minutes ago       Up 3 minutes        8080/tcp            test_visualizer.1.ssv5jpu7z8o5cj9261idfsznd
@@ -167,6 +174,7 @@ CONTAINER ID        IMAGE                             COMMAND                  C
 工作节点
 ```
 $ docker ps
+
 CONTAINER ID        IMAGE                      COMMAND                  CREATED             STATUS              PORTS               NAMES
 f3ee0b92ebea        ifkeeper/web-test:v1.0.3   "java -jar /app/dock…"   2 minutes ago       Up 2 minutes                            test_api.1.t8svu8agkpiiqeov345unod8c
 ```
@@ -203,6 +211,7 @@ services:
 
 ```
 $ docker service ls
+
 ID                  NAME                MODE                REPLICAS            IMAGE                             PORTS
 m6rryd33jtx3        test_api            replicated          6/6                 ifkeeper/web-test:v1.0.4          *:80->80/tcp
 v8kdkd4mnhnj        test_visualizer     replicated          1/1                 dockersamples/visualizer:stable   *:8080->8080/tcp
@@ -300,16 +309,20 @@ Redis 已将 Redis 端口 6379 预先配置为从容器开放给主机，并且�
 
 ```
 $ docker stack rm test
+
 Removing service test_api
 Removing service test_visualizer
 Removing network test_webnet
 
 $ docker service ls
+
 ID                  NAME                MODE                REPLICAS            IMAGE               PORTS
-[root@localhost yml]# docker ps
+
+$ docker ps
 CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
 
 $ docker stack deploy -c docker-compose-WITH-REDIS.yml test
+
 Creating network test_webnet
 Creating service test_api
 Creating service test_visualizer
@@ -324,6 +337,7 @@ Creating service test_redis
 
 ```
 $ docker service ls
+
 ID                  NAME                MODE                REPLICAS            IMAGE                             PORTS
 ll1o8f30n8rp        test_api            replicated          3/3                 ifkeeper/web-test:v1.0.3          *:80->80/tcp
 3e9clsldgtin        test_redis          replicated          0/1                 redis:latest                      *:6379->6379/tcp
@@ -334,6 +348,7 @@ ho0v1iasqj4k        test_visualizer     replicated          1/1                 
 
 ```
 $ docker images
+
 REPOSITORY                 TAG                 IMAGE ID            CREATED             SIZE
 ifkeeper/web-test          v1.0.4              6ab28b1d9933        6 days ago          602MB
 ifkeeper/web-test          v1.0.3              930517912f6a        6 days ago          602MB
@@ -356,6 +371,7 @@ $ ls
 data  yml
 
 $ docker service ls
+
 ID                  NAME                MODE                REPLICAS            IMAGE                             PORTS
 ll1o8f30n8rp        test_api            replicated          3/3                 ifkeeper/web-test:v1.0.3          *:80->80/tcp
 3e9clsldgtin        test_redis          replicated          1/1                 redis:latest                      *:6379->6379/tcp

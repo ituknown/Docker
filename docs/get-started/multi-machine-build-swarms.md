@@ -97,6 +97,7 @@ $ docker-swarm init
 
 ```
 $ docker swarm init
+
 Swarm initialized: current node (zijckbg21bygtehzlameaa0t8) is now a manager.
 
 To add a worker to this swarm, run the following command:
@@ -146,7 +147,8 @@ $ docker stack deploy -c docker-compose.yml <stack_name>
 命令执行示例：
 
 ```
-[root@localhost ~]# docker stack deploy -c docker-compose.yml test
+$ docker stack deploy -c docker-compose.yml test
+
 Creating network test_webnet
 Creating service test_api
 ```
@@ -160,7 +162,8 @@ $ docker service ls
 命令执行示例：
 
 ```
-[root@localhost ~]# docker service ls
+$ docker service ls
+
 ID                  NAME                MODE                REPLICAS            IMAGE                      PORTS
 wrxw1k2dl69d        test_api            replicated          5/5                 ifkeeper/web-test:v1.0.4   *:80->80/tcp
 ```
@@ -174,10 +177,13 @@ $ docker ps
 命令执行示例：
 
 ```
-[root@localhost ~]# docker service ls
+$ docker service ls
+
 ID                  NAME                MODE                REPLICAS            IMAGE                      PORTS
 wrxw1k2dl69d        test_api            replicated          5/5                 ifkeeper/web-test:v1.0.4   *:80->80/tcp
-[root@localhost yml]# docker ps
+
+$ docker ps
+
 CONTAINER ID        IMAGE                      COMMAND                  CREATED             STATUS              PORTS               NAMES
 a1d46f094221        ifkeeper/web-test:v1.0.4   "java -jar /app/dock…"   13 seconds ago      Up 8 seconds                            test_api.5.rxi684rcphtps5vzqjpryse4s
 9a0fb2a78202        ifkeeper/web-test:v1.0.4   "java -jar /app/dock…"   13 seconds ago      Up 8 seconds                            test_api.2.4mqp00fzjb51jp0bmbwv42qd2
@@ -195,7 +201,8 @@ $ docker node ls
 命令执行示例：
 
 ```
-[root@localhost ~]# docker node ls
+$ docker node ls
+
 ID                            HOSTNAME                STATUS              AVAILABILITY        MANAGER STATUS      ENGINE VERSION
 zijckbg21bygtehzlameaa0t8 *   localhost.localdomain   Ready               Active              Leader              18.09.0
 ```
@@ -211,7 +218,7 @@ $ docker info
 命令执行示例（只列出主要节点信息）：
 
 ```
-[root@localhost ~]# docker info
+$ docker info
 ...
 Swarm: active
  NodeID: zijckbg21bygtehzlameaa0t8
@@ -330,7 +337,7 @@ $ firewall-cmd --zone=public --list-ports
 命令执行示例：
 
 ```
-[root@localhost ~]# firewall-cmd --zone=public --list-ports
+$ firewall-cmd --zone=public --list-ports
 7946/tcp 7946/udp 4789/udp 4789/tcp 2377/udp 2377/tcp
 ```
 <!--endsec-->
@@ -409,7 +416,8 @@ $ docker swarm join --token <token>
 命令执行示例：
 
 ```
-[root@localhost /]# docker swarm join --token SWMTKN-1-5y6bh74vbdn3mesgvtttgtu3jy0c120z6dpc1acnozzsz4jy4q-8qifd7dwri7o7a3l78d5qhyik 192.168.31.130:2377
+$ docker swarm join --token SWMTKN-1-5y6bh74vbdn3mesgvtttgtu3jy0c120z6dpc1acnozzsz4jy4q-8qifd7dwri7o7a3l78d5qhyik 192.168.31.130:2377
+
 This node joined a swarm as a worker.
 ```
 
@@ -424,7 +432,8 @@ $ docker node ls
 命令执行示例：
 
 ```
-[root@localhost ~]# docker node ls
+$ docker node ls
+
 ID                            HOSTNAME                STATUS              AVAILABILITY        MANAGER STATUS      ENGINE VERSION
 ugwr3r0san0qhu068n0bu581x     localhost.localdomain   Ready               Active                                  18.09.0
 zijckbg21bygtehzlameaa0t8 *   localhost.localdomain   Ready               Active              Leader              18.09.0
@@ -435,7 +444,7 @@ zijckbg21bygtehzlameaa0t8 *   localhost.localdomain   Ready               Active
 继续在管理节点（`192.168.31.130`）执行 `docker info` 命令查看节点信息：
 
 ```
-[root@localhost ~]# docker info
+$ docker info
 ...
 Swarm: active
  NodeID: zijckbg21bygtehzlameaa0t8
@@ -453,7 +462,7 @@ Swarm: active
 然后在工作节点（`192.168.31.131`）执行 `docker info` 命令：
 
 ```
-[root@localhost ~]# docker info
+$ docker info
 ...
 Swarm: active
  NodeID: ugwr3r0san0qhu068n0bu581x
@@ -500,7 +509,8 @@ $ docker stack deploy -c docker-compose.yml test
 命令执行示例：
 
 ```
-[root@localhost ~]# docker stack deploy -c docker-compose.yml test
+$ docker stack deploy -c docker-compose.yml test
+
 Updating service test_api (id: wrxw1k2dl69d8jw1xrv235x9b)
 ```
 
@@ -513,10 +523,13 @@ $ docker servics ls
 命令执行示例：
 
 ```
-[root@localhost ~]# docker service ls
+$ docker service ls
+
 ID                  NAME                MODE                REPLICAS            IMAGE                      PORTS
 wrxw1k2dl69d        test_api            replicated          10/20               ifkeeper/web-test:v1.0.4   *:80->80/tcp
-[root@localhost ~]# docker service ls
+
+$ docker service ls
+
 ID                  NAME                MODE                REPLICAS            IMAGE                      PORTS
 wrxw1k2dl69d        test_api            replicated          20/20               ifkeeper/web-test:v1.0.4   *:80->80/tcp
 ```
@@ -532,7 +545,8 @@ $ docker service ps <service_name>
 命令执行示例：
 
 ```
-[root@localhost ~]# docker service ps test_api
+$ docker service ps test_api
+
 ID                  NAME                IMAGE                      NODE                    DESIRED STATE       CURRENT STATE                ERROR               PORTS
 z3zhifyw5f9r        test_api.1          ifkeeper/web-test:v1.0.4   localhost.localdomain   Running             Running about an hour ago                        
 4mqp00fzjb51        test_api.2          ifkeeper/web-test:v1.0.4   localhost.localdomain   Running             Running about an hour ago                        
@@ -565,7 +579,8 @@ $ docker ps
 命令执行示例：
 
 ```
-[root@localhost ~]# docker ps
+$ docker ps
+
 CONTAINER ID        IMAGE                      COMMAND                  CREATED             STATUS              PORTS               NAMES
 da2924b1293e        ifkeeper/web-test:v1.0.4   "java -jar /app/dock…"   2 minutes ago       Up 2 minutes                            test_api.7.wfb5ia7mhp02n92ko6mrg8805
 a67839d181a0        ifkeeper/web-test:v1.0.4   "java -jar /app/dock…"   2 minutes ago       Up 2 minutes                            test_api.14.w7ngl245ym49rpyyr0sao5z9b
@@ -582,7 +597,8 @@ a1d46f094221        ifkeeper/web-test:v1.0.4   "java -jar /app/dock…"   About 
 再在 **工作节点** 执行上面的命令查看运行容器（任务）：
 
 ```
-[root@localhost /]# docker ps
+$ docker ps
+
 CONTAINER ID        IMAGE                      COMMAND                  CREATED             STATUS              PORTS               NAMES
 c80d8086857a        ifkeeper/web-test:v1.0.4   "java -jar /app/dock…"   7 minutes ago       Up 6 minutes                            test_api.16.9xwle7cnrjqneso41a8lpkf2y
 9da11cfefd69        ifkeeper/web-test:v1.0.4   "java -jar /app/dock…"   7 minutes ago       Up 6 minutes                            test_api.12.o6yv7x6qwwb3ouo82n51ogvra
@@ -633,14 +649,16 @@ $ docker stack deploy -c docker-compose.yml <stack_name>
 命令执行示例：
 
 ```
-[root@localhost ~]# docker stack deploy -c docker-compose.yml test
+$ docker stack deploy -c docker-compose.yml test
+
 Updating service test_api (id: wrxw1k2dl69d8jw1xrv235x9b)
 ```
 
 再来看下服务状态：
 
 ```
-[root@localhost ~]# docker service ls
+$ docker service ls
+
 ID                  NAME                MODE                REPLICAS            IMAGE                      PORTS
 wrxw1k2dl69d        test_api            replicated          20/20               ifkeeper/web-test:v1.0.3   *:80->80/tcp
 ```
@@ -658,7 +676,8 @@ $ docker service ps <servie_name>
 *T1 时刻*
 
 ```
-[root@localhost ~]# docker service ps test_api
+$ docker service ps test_api
+
 ID                  NAME                IMAGE                      NODE                    DESIRED STATE       CURRENT STATE               ERROR               PORTS
 z3zhifyw5f9r        test_api.1          ifkeeper/web-test:v1.0.4   localhost.localdomain   Running             Running about an hour ago                       
 4mqp00fzjb51        test_api.2          ifkeeper/web-test:v1.0.4   localhost.localdomain   Running             Running about an hour ago                       
@@ -689,7 +708,8 @@ zyprqz3lrmjq        test_api.18         ifkeeper/web-test:v1.0.4   localhost.loc
 *T2时刻*
 
 ```
-[root@localhost ~]# docker service ps test_api
+$ docker service ps test_api
+
 ID                  NAME                IMAGE                      NODE                    DESIRED STATE       CURRENT STATE            ERROR               PORTS
 hz0guv3zluet        test_api.1          ifkeeper/web-test:v1.0.3   localhost.localdomain   Running             Running 3 minutes ago                        
 z3zhifyw5f9r         \_ test_api.1      ifkeeper/web-test:v1.0.4   localhost.localdomain   Shutdown            Shutdown 3 minutes ago                       
@@ -778,7 +798,8 @@ $ docker stack rm <stack_name>
 命令执行示例：
 
 ```
-[root@localhost ~]# docker stack rm test
+$ docker stack rm test
+
 Removing service test_api
 Removing network test_webnet
 ```
@@ -788,14 +809,16 @@ Removing network test_webnet
 在管理节点执行查看服务命令，查看是否还有服务：
 
 ```
-[root@localhost ~]# docker service ls
+$ docker service ls
+
 ID                  NAME                MODE                REPLICAS            IMAGE               PORTS
 ```
 
 查看是否还有运行中的容器：
 
 ```
-[root@localhost ~]# docker ps
+$ docker ps
+
 CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
 ```
 

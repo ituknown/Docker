@@ -2,7 +2,7 @@
 
 在构建服务之前需要满足一下条件：
 
-- 安装 Docker Compose，具体见 [三剑客之 Compose 安装篇]()
+- 安装 Docker Compose，具体见 [三剑客之 Compose 安装篇](../three-musketeers/compose/compose-install.md)
 - 知道什么是镜像、什么是容器、知道怎么创建镜像
 - 在本地或者 Docker Hub 已有可用镜像
 
@@ -78,7 +78,8 @@ this node is not a swarm manager. Use "docker swarm init" or "docker swarm join"
 命令执行示例：
 
 ```
-[root@localhost yml]# docker swarm init
+$ docker swarm init
+
 Swarm initialized: current node (09qeks0mgpovbzej6zt0d3kcs) is now a manager.
 
 To add a worker to this swarm, run the following command:
@@ -99,7 +100,8 @@ $ docker stack deploy -c docker-compose.yml test
 命令示例如下所示：
 
 ```
-[root@localhost yml]# docker stack deploy -c docker-compose.yml test
+$ docker stack deploy -c docker-compose.yml test
+
 Creating network test_webnet
 Creating service test_api
 ```
@@ -113,7 +115,7 @@ $ docker service ls
 命令执行示例：
 
 ```
-[root@localhost yml]# docker service ls
+$ docker service ls
 ID                  NAME                MODE                REPLICAS            IMAGE                      PORTS
 yt8tpaswma2g        test_api            replicated          5/5                 ifkeeper/web-test:v1.0.2   *:80->80/tcp
 ```
@@ -132,7 +134,8 @@ $ docker service ps <service_name>
 命令执行示例：
 
 ```
-[root@localhost yml]# docker service ps test_api
+$ docker service ps test_api
+
 ID                  NAME                IMAGE                      NODE                    DESIRED STATE       CURRENT STATE           ERROR               PORTS
 u7tpn66fd438        test_api.1          ifkeeper/web-test:v1.0.2   localhost.localdomain   Running             Running 8 minutes ago                       
 018vw5umo31i        test_api.2          ifkeeper/web-test:v1.0.2   localhost.localdomain   Running             Running 8 minutes ago                       
@@ -144,7 +147,8 @@ ac7csdun2g1n        test_api.5          ifkeeper/web-test:v1.0.2   localhost.loc
 你也可以查看当前机器上运行的容器数量：
 
 ```
-[root@localhost yml]# docker ps
+$ docker ps
+
 CONTAINER ID        IMAGE                      COMMAND                  CREATED             STATUS              PORTS               NAMES
 ccbd37855cee        ifkeeper/web-test:v1.0.2   "java -jar /app/dock…"   10 minutes ago      Up 9 minutes        80/tcp              test_api.4.iefpk06kmdqe69809q2g7lej8
 a7081ab0babf        ifkeeper/web-test:v1.0.2   "java -jar /app/dock…"   10 minutes ago      Up 9 minutes        80/tcp              test_api.5.ac7csdun2g1nz7qy8t1l3ligd
@@ -204,7 +208,8 @@ $ docker stack deploy -c test
 命令执行示例：
 
 ```
-[root@localhost yml]# docker stack deploy -c docker-compose.yml test
+$ docker stack deploy -c docker-compose.yml test
+
 Updating service test_api (id: yt8tpaswma2gors55xd4ioalz)
 ```
 
@@ -217,7 +222,8 @@ $ docker service ps test_api
 命令执行示例：
 
 ```
-[root@localhost yml]# docker service ps test_api
+$ docker service ps test_api
+
 ID                  NAME                IMAGE                      NODE                    DESIRED STATE       CURRENT STATE             ERROR               PORTS
 0g6zabvew57l        test_api.1          ifkeeper/web-test:v1.0.3   localhost.localdomain   Running             Running 31 seconds ago                        
 u7tpn66fd438         \_ test_api.1      ifkeeper/web-test:v1.0.2   localhost.localdomain   Shutdown            Shutdown 33 seconds ago                       
@@ -253,7 +259,8 @@ services:
 现在再执行 `docker stack deploy -c docker-compose.yml <name>` 命令。
 
 ```
-[root@localhost yml]# docker service ps test_api
+$ docker service ps test_api
+
 ID                  NAME                IMAGE                      NODE                    DESIRED STATE       CURRENT STATE             ERROR               PORTS
 0g6zabvew57l        test_api.1          ifkeeper/web-test:v1.0.3   localhost.localdomain   Running             Running 21 minutes ago                        
 u7tpn66fd438         \_ test_api.1      ifkeeper/web-test:v1.0.2   localhost.localdomain   Shutdown            Shutdown 21 minutes ago                       
@@ -287,7 +294,7 @@ $ docker service rm <service_name>
 命令执行示例：
 
 ```
-[root@localhost yml]# docker service rm test_api
+$ docker service rm test_api
 test_api
 ```
 
@@ -304,7 +311,8 @@ $ docker swarm leave -f
 命令执行示例：
 
 ```
-[root@localhost yml]# docker swarm leave -f
+$ docker swarm leave -f
+
 Node left the swarm.
 ```
 

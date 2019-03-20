@@ -33,7 +33,7 @@
 
 * [网络概述](docs/network-config/overview.md)
 * [bridge 网络](docs/network-config/bridge-net.md)
-* [配置说明]()
+* [网络配置]()
   + [bridge 网络配置](docs/network-config/bridge-net-config.md)
   + [overlay 网络配置](docs/network-config/overlay-net-config.md)
 
@@ -53,9 +53,10 @@
 
 ### 三剑客篇
 
-* [三剑客简介](docs/three-musketeers/README.md)
-* [三剑客之 Compose](docs/three-musketeers/compose.md)
-  + [Compose 安装](docs/three-musketeers/compose-install.md)
+* [三剑客简介](docs/three-musketeers/compose/README.md)
+* [三剑客之 Compose](docs/three-musketeers/compose/compose.md)
+  + [Compose 安装](docs/three-musketeers/compose/compose-install.md)
+  + [小试牛刀](docs/three-musketeers/compose/getting-started.md)
 
 ---
 
