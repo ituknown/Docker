@@ -29,7 +29,8 @@ $ docker search <image_name>
 命令示例：
 
 ```
-[root@localhost /]# docker search openjdk
+$ docker search openjdk
+
 NAME                               DESCRIPTION                                     STARS               OFFICIAL            AUTOMATED
 openjdk                            OpenJDK is an open-source implementation of …   1405                [OK]                
 azul/zulu-openjdk                  Zulu is a fully tested, compatibility verifi…   97                                      [OK]
@@ -67,11 +68,13 @@ $ docker search <image_name[:tag]>
 命令示例：
 
 ```
-[root@localhost /]# docker images
+$ docker images ls
 REPOSITORY             TAG                 IMAGE ID            CREATED             SIZE
 ifkeeper/centos-jvm8   v1.0.0              e15334134272        15 hours ago        583MB
 centos                 latest              1e1148e4cc2c        3 days ago          202MB
-[root@localhost /]# docker pull openjdk
+
+$ docker pull openjdk
+
 Using default tag: latest
 latest: Pulling from library/openjdk
 16e82e17faef: Pull complete 
@@ -84,11 +87,12 @@ eacd9302ecfd: Pull complete
 8f9d52bf6cde: Pull complete 
 Digest: sha256:2cbb95c7479634c53bc2be243554a98d6928c189360fa958d2c970974e7f131f
 Status: Downloaded newer image for openjdk:latest
-[root@localhost /]# docker images
+
+$ docker images ls
 REPOSITORY             TAG                 IMAGE ID            CREATED             SIZE
 ifkeeper/centos-jvm8   v1.0.0              e15334134272        15 hours ago        583MB
 centos                 latest              1e1148e4cc2c        3 days ago          202MB
 openjdk                latest              8e7eacedab93        4 days ago          986MB
 ```
 
-可以看到成功将 openjdk 镜像拉去下来，并且版本为 lastest。现在我们就可以基于该镜像构建属于自己的镜像了！
+可以看到成功将 openjdk 镜像拉去下来，并且版本为 `latest`。现在我们就可以基于该镜像构建属于自己的镜像了！

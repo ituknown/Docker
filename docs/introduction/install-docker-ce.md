@@ -21,72 +21,6 @@ $ sudo yum remove docker \
                   docker-engine
 ```
 
-命令示例（笔者当前已经安装执行该命令会进行卸载）：
-
-```
-[root@localhost ~]# sudo yum remove docker \
->                 docker-client \
->                 docker-client-latest \
->                 docker-common \
->                 docker-latest \
->                 docker-latest-logrotate \
->                 docker-logrotate \
->                 docker-selinux \
->                 docker-engine-selinux \
->                 docker-engine
-已加载插件：fastestmirror
-参数 docker 没有匹配
-参数 docker-client 没有匹配
-参数 docker-client-latest 没有匹配
-参数 docker-common 没有匹配
-参数 docker-latest 没有匹配
-参数 docker-latest-logrotate 没有匹配
-参数 docker-logrotate 没有匹配
-参数 docker-engine 没有匹配
-正在解决依赖关系
---> 正在检查事务
----> 软件包 container-selinux.noarch.2.2.74-1.el7 将被 删除
---> 正在处理依赖关系 container-selinux >= 2.9，它被软件包 3:docker-ce-18.09.0-3.el7.x86_64 需要
---> 正在检查事务
----> 软件包 docker-ce.x86_64.3.18.09.0-3.el7 将被 删除
---> 解决依赖关系完成
-
-依赖关系解决
-
-=============================================================================================================================================================================================
- Package                                         架构                                 版本                                             源                                               大小
-=============================================================================================================================================================================================
-正在删除:
- container-selinux                               noarch                               2:2.74-1.el7                                     @extras                                          37 k
-为依赖而移除:
- docker-ce                                       x86_64                               3:18.09.0-3.el7                                  @docker-ce-stable                                81 M
-
-事务概要
-=============================================================================================================================================================================================
-移除  1 软件包 (+1 依赖软件包)
-
-安装大小：81 M
-是否继续？[y/N]：y
-Downloading packages:
-Running transaction check
-Running transaction test
-Transaction test succeeded
-Running transaction
-未将 /usr/bin/dockerd 配置为 dockerd 的备用项
-  正在删除    : 3:docker-ce-18.09.0-3.el7.x86_64                                                                                                                                         1/2 
-  正在删除    : 2:container-selinux-2.74-1.el7.noarch                                                                                                                                    2/2 
-  验证中      : 2:container-selinux-2.74-1.el7.noarch                                                                                                                                    1/2 
-  验证中      : 3:docker-ce-18.09.0-3.el7.x86_64                                                                                                                                         2/2 
-
-删除:
-  container-selinux.noarch 2:2.74-1.el7                                                                                                                                                      
-
-作为依赖被删除:
-  docker-ce.x86_64 3:18.09.0-3.el7                                                                                                                                                           
-
-完毕！
-```
-
 docker 的相关镜像（`images`）、容器（`containers`）、卷（`volumes`）、网络（`networks`）全部被存储在 `/var/lib/docker` 文件夹下。
 
 <!--sec data-title="注意" data-id="section0" data-show=true ces-->
@@ -94,8 +28,8 @@ docker 的相关镜像（`images`）、容器（`containers`）、卷（`volumes
 执行以上命令虽然将老版本 docker 卸载掉了，但是镜像、容器等数据不会进行清楚。可以进入 `/var/lib` 下可以看到 `docker` 文件夹依然存在，并且该文件夹下还存在相关镜像依赖信息：
 
 ```
-[root@localhost /]# cd /var/lib/docker
-[root@localhost docker]# ls
+$ ls /var/lib/docker
+
 builder  buildkit  containerd  containers  image  network  overlay2  plugins  runtimes  swarm  tmp  trust  volumes
 ```
 
@@ -131,27 +65,6 @@ $ sudo yum install -y yum-utils \
                       lvm2
 ```
 
-命令示例：
-
-```
-[root@localhost /]# sudo yum install -y yum-utils \
-                                        device-mapper-persistent-data \
-                                        lvm2
-已加载插件：fastestmirror
-Loading mirror speeds from cached hostfile
- * base: mirrors.aliyun.com
- * extras: mirrors.aliyun.com
- * updates: mirrors.163.com
-base                                                                                                                                                                  | 3.6 kB  00:00:00     
-docker-ce-stable                                                                                                                                                      | 3.5 kB  00:00:00     
-extras                                                                                                                                                                | 3.4 kB  00:00:00     
-updates                                                                                                                                                               | 3.4 kB  00:00:00     
-软件包 yum-utils-1.1.31-50.el7.noarch 已安装并且是最新版本
-软件包 device-mapper-persistent-data-0.7.3-3.el7.x86_64 已安装并且是最新版本
-软件包 7:lvm2-2.02.180-10.el7_6.2.x86_64 已安装并且是最新版本
-无须任何处理
-```
-
 使用以下命令设置稳定（`stable`）存储库。任何时候总是需要稳定的存储库，即使你想从边缘（`edge`）或者测试（`test`）存储库安装构建。
 
 ```
@@ -163,10 +76,11 @@ $ sudo yum-config-manager \
 命令示例：
 
 ```
-[root@localhost /]# sudo yum-config-manager \
->     --add-repo \
->     https://download.docker.com/linux/centos/docker-ce.repo
-已加载插件：fastestmirror
+$ sudo yum-config-manager \
+>      --add-repo \
+>      https://download.docker.com/linux/centos/docker-ce.repo
+
+......
 adding repo from: https://download.docker.com/linux/centos/docker-ce.repo
 grabbing file https://download.docker.com/linux/centos/docker-ce.repo to /etc/yum.repos.d/docker-ce.repo
 repo saved to /etc/yum.repos.d/docker-ce.repo
@@ -222,12 +136,9 @@ $ yum list docker-ce --showduplicates | sort -r
 使用示例：
 
 ```
-[root@localhost /]# yum list docker-ce --showduplicates | sort -r
-已加载插件：fastestmirror
-可安装的软件包
- * updates: mirrors.163.com
-Loading mirror speeds from cached hostfile
- * extras: mirrors.aliyun.com
+$ yum list docker-ce --showduplicates | sort -r
+
+......
 docker-ce.x86_64            3:18.09.0-3.el7                     docker-ce-stable
 docker-ce.x86_64            18.06.1.ce-3.el7                    docker-ce-stable
 docker-ce.x86_64            18.06.0.ce-3.el7                    docker-ce-stable
@@ -268,12 +179,9 @@ $ sudo yum install -y docker-ce-18.03.0.ce-1
 如笔者直接安装最新版本示例：
 
 ```
-[root@localhost /]# sudo yum install -y docker-ce
-已加载插件：fastestmirror
-Loading mirror speeds from cached hostfile
- * base: mirrors.aliyun.com
- * extras: mirrors.aliyun.com
- * updates: mirrors.163.com
+$ sudo yum install -y docker-ce
+
+......
 正在解决依赖关系
 --> 正在检查事务
 ---> 软件包 docker-ce.x86_64.3.18.09.0-3.el7 将被 安装
@@ -331,12 +239,6 @@ Running transaction
 $ sudo systemctl start docker
 ```
 
-可以输入命令如下命令查看 docker 进程：
-
-```
-$ ps -aux | grep docker
-```
-
 # 验证 Docker
 
 虽然 Docker CE 已经安装并运行，但是我们需要进行验证 Docker 是否进行正确的安装，这里可以运行 `hello-world` 镜像进行验证。
@@ -350,7 +252,7 @@ $ sudo docker run hello-world
 运行示例：
 
 ```
-[root@localhost /]# sudo docker run hello-world
+$ sudo docker run hello-world
 
 Hello from Docker!
 This message shows that your installation appears to be working correctly.

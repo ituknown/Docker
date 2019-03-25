@@ -21,7 +21,7 @@ $ cat /etc/redhat-release
 命令示例：
 
 ```
-[root@localhost ~]# cat /etc/redhat-release 
+$ cat /etc/redhat-release 
 CentOS Linux release 7.6.1810 (Core)
 ```
 
@@ -37,9 +37,10 @@ $ uname -a
 命令示例：
 
 ```
-[root@localhost ~]# cat /proc/version 
+$ cat /proc/version 
 Linux version 3.10.0-957.1.3.el7.x86_64 (mockbuild@kbuilder.bsys.centos.org) (gcc version 4.8.5 20150623 (Red Hat 4.8.5-36) (GCC) ) #1 SMP Thu Nov 29 14:49:43 UTC 2018
-[root@localhost ~]# uname -a
+
+$ uname -a
 Linux localhost.localdomain 3.10.0-957.1.3.el7.x86_64 #1 SMP Thu Nov 29 14:49:43 UTC 2018 x86_64 x86_64 x86_64 GNU/Linux
 ```
 

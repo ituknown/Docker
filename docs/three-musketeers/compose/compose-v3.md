@@ -239,8 +239,6 @@ services:
 >
 > 该选项在 `docker stack swarm` 模式（version 3）下无法使用。
 
-## credential_spec
-
 ## depends_on
 
 定义服务之间的依赖关系。
@@ -268,7 +266,7 @@ services:
 > **[warning] 注意**
 >
 > 在启动 `web` 之前 `depends_on` 不会让 `db` 和 `redis` 预先准备好，而是在启动时。如果你需要控制服务的启动顺序可以点击 [传送门](https://docs.docker.com/compose/startup-order/) 查看具体配置信息。
-> 另外，在 `v3` 版本中 `depends_on` 条件形式已经不再赞成使用，后续会逐渐启用。
+> 另外，在 `v3` 版本中 `depends_on` 条件形式已经不再赞成使用，后续会逐渐弃用。
 > 在 `docker stack swarm` 模式下是不支持 `depends_on` 选项的，即使增加该选项也会自动忽略。
 
 ## deploy

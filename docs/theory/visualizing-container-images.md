@@ -65,10 +65,11 @@ $ docker run centos touch happiness.txt
 即使这个 `centos` 容器不在运行，我们依然能够在主机的文件系统找到这个新文件：
 
 ```
-[root@localhost docker]# docker ps -a
+$ docker ps -a
 CONTAINER ID        IMAGE               COMMAND                 CREATED             STATUS                     PORTS               NAMES
 a5aedb4b848e        1e1148e4cc2c        "touch happiness.txt"   7 minutes ago       Exited (0) 7 minutes ago                       awesome_chatterjee
-[root@localhost docker]# find / -name happiness.txt
+
+$ find / -name happiness.txt
 /var/lib/docker/overlay2/cd1fc1a...1d8cb1a2/diff/happiness.txt
 ```
 
@@ -102,7 +103,6 @@ $ /var/lib/docker/graph/e809f156dc985.../json
 
 现在，结合上面提到的实现细节来理解 Docker 的命令。
 
----
 - `docker create <image-id>`
 
 ![](_images/visualizing/9.png)
@@ -111,14 +111,12 @@ $ /var/lib/docker/graph/e809f156dc985.../json
 
 ![](_images/visualizing/10.png)
 
----
 - `docker start <container-id>`
 
 ![](_images/visualizing/11.png)
 
 `docker start` 命令为容器文件系统创建了一个进程隔离空间。注意，每一个容器只能够有一个进程隔离空间。
 
----
 - `docker run <image-id>`
 
 ![](_images/visualizing/12.png)
@@ -131,7 +129,6 @@ $ /var/lib/docker/graph/e809f156dc985.../json
 
 **题外话：** 用过 Git 的都知道 `git pull` 命令。 `git pull` 命令就是 `git fetch` 和 `git merge` 命令的组合。同样的，`docker run` 就是 `docker create` 和 `docker start` 两个命令的组合。
 
----
 - `docker ps`
 
 ![](_images/visualizing/14.png)
@@ -146,21 +143,18 @@ $ /var/lib/docker/graph/e809f156dc985.../json
 
 `docker ps -a` 命令会列出所有的容器，不管是运行的，还是停止的。
 
----
 - `docker images`
 
 ![](_images/visualizing/16.png)
 
 `docker images` 命令会列出所有顶层（`top-level`）镜像。实际上，在这里我们没有办法区分一个镜像和一个只读镜层，所有我们提出了 top-level 镜像。只有创建容器时使用的镜像或者是直接 `pull` 下来的镜像能被称为顶层（`top-level`）镜像，并且每一个顶层镜像下面都隐藏了多个镜像层。
 
----
 - `docker images -a`
 
 ![](_images/visualizing/17.png)
 
 `docker images -a` 命令列出了所有的镜像，也可以说是列出所有的可读层。如果你想要查看某一个 `image-id` 下的所有层，可以使用 `docker history` 来查看。
 
----
 - `docjer stop <container-id>`
 
 ![](_images/visualizing/18.png)
@@ -174,28 +168,24 @@ $ /var/lib/docker/graph/e809f156dc985.../json
 
 `docker kill` 命令想所有运行在容器中的进程发送一个不友好的 `SIGKILL` 信号。
 
----
 - `docker pause <container-id>`
 
 ![](_images/visualizing/20.png)
 
 `docker stop` 和 `docker kill` 命令会发送 `UNIX` 的信号给运行中的进程。`docker pause` 命令则不一样，它利用了 `cgroup` 的特性将运行中的进程空间暂停。但是这种方式的不足之处在于发送一个 `SIGTSTP` 信号对于进程来说不投简单易懂，以助于不能让所有进程暂停。
 
----
 - `docekr rm <container-id>`
 
 ![](_images/visualizing/21.png)
 
 `docker rm` 命令会移除构成容器的可读写层。注意，这个命令只能对非运行态容器执行。
 
----
 - `docker rmi <image-id>`
 
 ![](_images/visualizing/22.png)
 
 `docekr rmi` 命令会移除构成镜像的一个只读层。你只能够使用 `docker rmi` 来移除最顶层（`top level Layer`）（也可以说是镜像），你可以使用 `-f` 参数来强制删除中间的只读层。
 
----
 - `docker commit <container-id>`
 
 ![](_images/visualizing/23.png)
@@ -204,7 +194,6 @@ $ /var/lib/docker/graph/e809f156dc985.../json
 
 ![](_images/visualizing/24.png)
 
----
 - `docker build`
 
 ![](_images/visualizing/25.png)
@@ -215,7 +204,6 @@ $ /var/lib/docker/graph/e809f156dc985.../json
 
 我们从上图可以看到，`build` 命令根据 `Dockerfile` 文件中的 `FROM` 指令获取到镜像，然后重读 `RUN（create 和 start）`、`update`、`commit`。在循环中每一步都会生成一个新的层，因此许多新的层会被创建。
 
----
 - `docker exec <running-container-id>`
 
 ![](_images/visualizing/27.png)
@@ -228,26 +216,22 @@ $ /var/lib/docker/graph/e809f156dc985.../json
 
 `docker inspect` 命令会提取容器或者镜像最顶层的元数据（`metadata`）。
 
----
 - `docker save <image-id>`
 
 ![](_images/visualizing/29.png)
 
 `docker save` 命令会创建一个镜像的压缩文件，这个文件能够在另外一个主机的 Docekr 上使用。和 `export` 命令不同，这个命令为每一个层都保存了他们的元数据。这个命令只能对镜像生效。
 
----
 - `docker export <container-id>`
 
 ![](_images/visualizing/30.png)
 
 `docker export` 命令创建一个 `tar` 文件，并且移除了元数据和不必要的层，将多个层整个成了一个层，只保存了当前统一视角看到的内容（`export` 后的容器在 `import` 到 Docker 中，通过 `docker images -tree` 命令只能看到一个镜像，而 `save` 后的井下你给则不同，它能够看到这个镜像的历史镜像）。
 
----
 - `docker hisory <image-id>`
 
 `docker history` 命令递归的输出指定镜像的历史镜像。 
 
-
 ---
 
-- 参考 [Docker.one](http://www.dockerone.io)
+- 来源 [Docker.one](http://www.dockerone.io)

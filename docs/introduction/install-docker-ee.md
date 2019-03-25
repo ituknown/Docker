@@ -65,26 +65,19 @@ $ sudo yum remove docker \
 命令执行示例：
 
 ```
-[root@localhost ~]# sudo yum remove docker \
->                   docker-client \
->                   docker-client-latest \
->                   docker-common \
->                   docker-latest \
->                   docker-latest-logrotate \
->                   docker-logrotate \
->                   docker-selinux \
->                   docker-engine-selinux \
->                   docker-engine \
->                   docker-ce
-已加载插件：fastestmirror
-参数 docker 没有匹配
-参数 docker-client 没有匹配
-参数 docker-client-latest 没有匹配
-参数 docker-common 没有匹配
-参数 docker-latest 没有匹配
-参数 docker-latest-logrotate 没有匹配
-参数 docker-logrotate 没有匹配
-参数 docker-engine 没有匹配
+$ sudo yum remove docker \
+>                 docker-client \
+>                 docker-client-latest \
+>                 docker-common \
+>                 docker-latest \
+>                 docker-latest-logrotate \
+>                 docker-logrotate \
+>                 docker-selinux \
+>                 docker-engine-selinux \
+>                 docker-engine \
+>                 docker-ce
+
+......
 正在解决依赖关系
 --> 正在检查事务
 ---> 软件包 container-selinux.noarch.2.2.74-1.el7 将被 删除
@@ -105,7 +98,6 @@ $ sudo yum remove docker \
 移除  2 软件包
 
 安装大小：81 M
-是否继续？[y/N]：y
 Downloading packages:
 Running transaction check
 Running transaction test
@@ -168,14 +160,9 @@ $ sudo yum install -y yum-utils device-mapper-persistent-data lvm2
 命令执行示例：
 
 ```
-[root@localhost /]# sudo yum install -y yum-utils device-mapper-persistent-data lvm2
-已加载插件：fastestmirror
-Loading mirror speeds from cached hostfile
- * base: mirrors.aliyun.com
- * extras: mirrors.aliyun.com
- * updates: mirrors.163.com
-base                                                                                                                                                                  | 3.6 kB  00:00:00     
-extras                                                                                                                                                                | 3.4 kB  00:00:00     
+$ sudo yum install -y yum-utils device-mapper-persistent-data lvm2
+
+......                                                                                                                                                               | 3.4 kB  00:00:00     
 http://centos.ustc.edu.cn/centos/7.6.1810/updates/x86_64/repodata/repomd.xml: [Errno 12] Timeout on http://centos.ustc.edu.cn/centos/7.6.1810/updates/x86_64/repodata/repomd.xml: (28, 'Operation too slow. Less than 1000 bytes/sec transferred the last 30 seconds')
 正在尝试其它镜像。
 updates                                                                                                                                                               | 3.4 kB  00:00:00     
@@ -187,7 +174,7 @@ http://mirrors.nju.edu.cn/centos/7.6.1810/updates/x86_64/repodata/16c70c9474a229
 软件包 yum-utils-1.1.31-50.el7.noarch 已安装并且是最新版本
 软件包 device-mapper-persistent-data-0.7.3-3.el7.x86_64 已安装并且是最新版本
 软件包 7:lvm2-2.02.180-10.el7_6.2.x86_64 已安装并且是最新版本
-无须任何处理
+......
 ```
 
 接着再使用如下命令添加 `stable` 版镜像仓库：
@@ -201,14 +188,14 @@ $ sudo -E yum-config-manager \
 命令执行示例：
 
 ```
-[root@localhost /]# sudo -E yum-config-manager --add-repo "$DOCKER_URL/centos/docker-ee.repo"
-已加载插件：fastestmirror
+$ sudo -E yum-config-manager --add-repo "$DOCKER_URL/centos/docker-ee.repo"
+
 adding repo from: https://storebits.docker.com/ee/trial/sub-d09f95f2-e8a6-4358-820c-**********/centos/docker-ee.repo
 grabbing file https://storebits.docker.com/ee/trial/sub-d09f95f2-e8a6-4358-820c-**********/centos/docker-ee.repo to /etc/yum.repos.d/docker-ee.repo
 Could not fetch/save url https://storebits.docker.com/ee/trial/sub-d09f95f2-e8a6-4358-820c-**********/centos/docker-ee.repo to file /etc/yum.repos.d/docker-ee.repo: [Errno 14] HTTPS Error 403 - Forbidden
 ```
 
-如果你看到如上错误原据说是在国内访问不到 docker 官方镜像的缘故，笔者使用梯子依然提示如上错误。 {% em %}暂未解决 !{% endem %}
+如果你看到如上错误原据说是在国内访问不到 docker 官方镜像的缘故，试试梯子。
 
 # 开始安装 Docker EE
 

@@ -57,6 +57,7 @@
 + [Compose 安装](docs/three-musketeers/compose/compose-install.md)
 + [小试牛刀](docs/three-musketeers/compose/getting-started.md)
 + [Compose-v3](docs/three-musketeers/compose/compose-v3.md)
++ [部署 swarm 应用](docs/three-musketeers/compose/deploy-stack-swarm-app.md)
 
 ---
 
