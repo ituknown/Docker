@@ -220,7 +220,7 @@ $ /var/lib/docker/graph/e809f156dc985.../json
 
 ![](_images/visualizing/29.png)
 
-`docker save` 命令会创建一个镜像的压缩文件，这个文件能够在另外一个主机的 Docekr 上使用。和 `export` 命令不同，这个命令为每一个层都保存了他们的元数据。这个命令只能对镜像生效。
+`docker save` 命令会创建一个镜像的压缩文件，这个文件能够在另外一个主机的 Docker 上使用。和 `export` 命令不同，这个命令为每一个层都保存了他们的元数据。这个命令只能对镜像生效。
 
 - `docker export <container-id>`
 
