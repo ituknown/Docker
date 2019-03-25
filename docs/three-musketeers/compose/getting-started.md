@@ -25,7 +25,6 @@ hello-world-1.0.0.jar
 
 $ touch Dockerfile
 
-# Dockerfile 文件内容如下
 $ cat Dockerfile
 
 FROM itumate/jdk:8.0.0
@@ -56,7 +55,6 @@ hello-world-1.0.0.jar Dockerfile
 
 $ touch docker-compose.yml
 
-# docker-compose.yml 文件内容如下
 $ cat docker-compose.yml
 
 version: "3"
@@ -85,7 +83,7 @@ services:
 
 这样，一个简单的 docker-compose 就定义完成。
 
-- 启动服务
+# 启动单机服务
 
 在当前目录下执行 `docker-compose up` 指令启动服务。注意，docker-compose 会使用默认服务名称，你也可以使用 `-p` 参数指定项目名称。
 
@@ -94,6 +92,7 @@ $ ls
 hello-world-1.0.0.jar Dockerfile docker-compose.yml
 
 $ docker-compose up
+
 # 输出信息如下：
 docker-compose up
 Building web
@@ -174,7 +173,71 @@ Hello World - 2
 
 看到每访问一次就会增加一次访问次数。这样一个简单的单机服务就启动成功。
 
-- 关闭、下线单机服务
+# 重构服务
+
+修改原 `docker-compose.yml` 内容，修改后如下：
+
+```yaml
+version: "3"
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    volumes:
+      - .:/app
+
+volumes:
+  web-data:
+```
+
+再次运行 `docker-compose up` 命令启动服务：
+
+```
+$ docker-compose up
+
+Creating volume "docker_web-data" with default driver
+Creating docker_web_1 ... done
+Attaching to docker_web_1
+web_1  | 
+web_1  |   .   ____          _            __ _ _
+web_1  |  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+web_1  | ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+web_1  |  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+web_1  |   '  |____| .__|_| |_|_| |_\__, | / / / /
+web_1  |  =========|_|==============|___/=/_/_/_/
+web_1  |  :: Spring Boot ::        (v2.1.3.RELEASE)
+```
+
+从输出的日志信息中可以看到，在修改部分内容之后再次使用 `docker-compose up` 命令启动服务并没有像第一次构建镜像。现在不做任何修改再次执行命令
+`docker-compose up` 命令：
+
+```
+$ docker-compose up
+
+docker_web_1 is up-to-date
+Attaching to docker_web_1
+web_1  | 
+web_1  |   .   ____          _            __ _ _
+web_1  |  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+web_1  | ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+web_1  |  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+web_1  |   '  |____| .__|_| |_|_| |_\__, | / / / /
+web_1  |  =========|_|==============|___/=/_/_/_/
+web_1  |  :: Spring Boot ::        (v2.1.3.RELEASE)
+```
+
+看到，这次的输出信息更加直接。原因是在使用 `docker-compose` 启动服务时会将信息进行缓存，当下载再起启动服务时会将两次的内容信息做对比。如果信息
+做了修改那么进行修改容器信息并重新运行，否则不做任何修改。
+
+这是 `docker-compose` 的一大优势。
+
+另外，由于使用卷将当前目录下的内容挂载到容器中。当你写的应用程序有使用到这些文件时并且这些文件做了修改。那么你每次修改的文件信息都会在程序中体现出来。
+
+# 关闭、下线单机服务
 
 关闭服务如下命令：
 
@@ -184,4 +247,100 @@ $ docker-compose stop
  or
 # 停止服务并删除容器、网络、镜像和卷
 $ docker-compose down
+```
+
+# 命令说明
+
+- **后台运行服务**
+
+在上面的示例中看到，每次启动服务时都会在控制台上输出日志信息。如果你退出日志那么响应的服务也会被杀死，所以，如果你想要服务在后台运行可以使用 `-d` 参数：
+
+```
+$ docker-compose up -d
+
+docker-compose up -d
+docker_web_1 is up-to-date
+```
+
+查看服务是否运行状态：
+
+```
+$ docker-compose ps
+    Name                  Command               State           Ports         
+------------------------------------------------------------------------------
+docker_web_1   java -jar /app/hello-world ...   Up      0.0.0.0:8080->8080/tcp
+```
+
+- **运行一次性命令**
+
+如果你想使用一次性命令可以使用 `run` 命令，例如，要查看Web服务可用的环境变量：
+
+```
+$ docker-compose run web env
+```
+
+- **停止服务**
+
+```
+$ docker-compose stop
+```
+
+- **下线服务并删除卷、网络和容器信息**
+
+注意：当前版本如果要同时删除卷信息需要增加 `--volumes` 参数：
+
+```
+$ docker-compose down
+
+# 同时删除卷增加 --volumes 参数
+$ docker-compose --volumes
+```
+
+另外，除了这些命令外。docker-compose 单机服务还有一些可使用命令。你可以使用 `--help` 命令查询所有命令及命令的相信信息。示例：
+
+```
+# 查看全部命令(只列出部分信息,具体自己使用命令查看)
+$ docker-compose --help
+
+...
+Commands:
+  build              Build or rebuild services
+  bundle             Generate a Docker bundle from the Compose file
+  config             Validate and view the Compose file
+  create             Create services
+  down               Stop and remove containers, networks, images, and volumes
+  events             Receive real time events from containers
+  exec               Execute a command in a running container
+  help               Get help on a command
+  images             List images
+  kill               Kill containers
+  logs               View output from containers
+  pause              Pause services
+  port               Print the public port for a port binding
+  ps                 List containers
+  pull               Pull service images
+  push               Push service images
+  restart            Restart services
+  rm                 Remove stopped containers
+  run                Run a one-off command
+  scale              Set number of containers for a service
+  start              Start services
+  stop               Stop services
+  top                Display the running processes
+  unpause            Unpause services
+  up                 Create and start containers
+  version            Show the Docker-Compose version information
+  
+# 查看某命令信息(只列出部分信息,具体自己使用命令查看)
+$ docker-compose build --help
+
+...
+Options:
+    --compress              Compress the build context using gzip.
+    --force-rm              Always remove intermediate containers.
+    --no-cache              Do not use cache when building the image.
+    --pull                  Always attempt to pull a newer version of the image.
+    -m, --memory MEM        Sets memory limit for the build container.
+    --build-arg key=val     Set build-time variables for services.
+    --parallel              Build images in parallel.
 ```
