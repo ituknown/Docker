@@ -43,6 +43,33 @@ Docker Compose 提供管理整个服务声明周期的命令：
 - 查询服务输出日子可以使用 `docker-compose logs <option>` 命令
 - ......
 
+另外，在编写 `docker-compose` 时需要指定版本信息。不同版本之间的语法有些差异，当前 `docker-ce v18.09` 可使用最高版本为 `3.x`。具体版本号与 Docker Engine 之间的关系对应如下：
+
+|Compose-file version |	Docker Engine release|
+|:-------------------:|:--------------------:|
+|3.7	|18.06.0+|
+|3.6	|18.02.0+|
+|3.5	|17.12.0+|
+|3.4	|17.09.0+|
+|3.3	|17.06.0+|
+|3.2	|17.04.0+|
+|3.1	|1.13.1+|
+|3.0	|1.13.0+|
+|2.4	|17.12.0+|
+|2.3	|17.06.0+|
+|2.2	|1.13.0+|
+|2.1	|1.12.0+|
+|2.0	|1.10.0+|
+|1.0	|1.9.1.+|
+
+所以，当你使用的是 docker `v17.04.0+` 版本时在编写 `docker-compose.yaml` 文件时的 `version` 就可以指定 `3`：
+
+```yaml
+version: "3"
+services:
+  #......
+```
+
 # Compose 优势
 
 **单机实现多隔离环境**
@@ -89,3 +116,111 @@ $ docker-compose up -d
 $ ./run_tests
 $ docker-compose down
 ```
+
+# 小栗子
+
+在介绍具体语法之前先来看下一个完整的示例，以 `v3` 为栗：
+
+<!--sec data-title="Example Compose file version 3" data-id="section0" data-show=true ces-->
+```yaml
+version: "3"
+services:
+
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379"
+    networks:
+      - frontend
+    deploy:
+      replicas: 2
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+
+  db:
+    image: postgres:9.4
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - backend
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+
+  vote:
+    image: dockersamples/examplevotingapp_vote:before
+    ports:
+      - "5000:80"
+    networks:
+      - frontend
+    depends_on:
+      - redis
+    deploy:
+      replicas: 2
+      update_config:
+        parallelism: 2
+      restart_policy:
+        condition: on-failure
+
+  result:
+    image: dockersamples/examplevotingapp_result:before
+    ports:
+      - "5001:80"
+    networks:
+      - backend
+    depends_on:
+      - db
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+
+  worker:
+    image: dockersamples/examplevotingapp_worker
+    networks:
+      - frontend
+      - backend
+    deploy:
+      mode: replicated
+      replicas: 1
+      labels: [APP=VOTING]
+      restart_policy:
+        condition: on-failure
+        delay: 10s
+        max_attempts: 3
+        window: 120s
+      placement:
+        constraints: [node.role == manager]
+
+  visualizer:
+    image: dockersamples/visualizer:stable
+    ports:
+      - "8080:8080"
+    stop_grace_period: 1m30s
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+
+networks:
+  frontend:
+  backend:
+
+volumes:
+  db-data:
+```
+<!--endsec-->
+
+从上面的示例中可以体现如下信息：各项配置都是由顶级键(如：`services`、`networks`、`networks` 和 `volumes`）扩展而来。每个顶级键下是具体的
+参数信息，如 `volumes` 顶级键定义一个 `db-data` volume。参数信息下就是用于定义参数的配置信息，如 `visualizer` 参数下是 `image` 和 `ports`
+共同组织该选项表现的形式。
+
+在 `docker-compose.yaml` 文件中，所有的参数、值都是由顶级键定义服务结构。该顶级键与其子级配置（例如 `build`，`deploy`，`depends_on`，
+`networks` 等）共同定义服务信息。总的来说，`docker-compose` 文件总具体的格式为 `<key>: <option>: <value>`。

@@ -51,13 +51,13 @@
   + [aufs 驱动](docs/manage-application-data/storage-driver/aufs-driver.md)
 ---
 
-### 三剑客篇
+### 三剑客之 Compose
 
-* [三剑客简介](docs/three-musketeers/compose/README.md)
+* [Compose 简介](docs/three-musketeers/compose/README.md)
 * [三剑客之 Compose](docs/three-musketeers/compose/compose.md)
-  + [Compose 安装](docs/three-musketeers/compose/compose-install.md)
-  + [小试牛刀](docs/three-musketeers/compose/getting-started.md)
-  + [Compose-v3](docs/three-musketeers/compose/compose-v3.md)
++ [Compose 安装](docs/three-musketeers/compose/compose-install.md)
++ [小试牛刀](docs/three-musketeers/compose/getting-started.md)
++ [Compose-v3](docs/three-musketeers/compose/compose-v3.md)
 
 ---
 
