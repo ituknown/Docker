@@ -1,6 +1,6 @@
 # 前言
 
-OverlayFS 是一个联合文件系统，类似 AUFS，但速度更快实现更简单。Docker 为 OverlayFS 提供两种存储驱动，分别是原始的 `overlay` 和更新更稳定
+OverlayFS 是一个联合文件系统，类似 `AUFS`，但速度更快实现更简单。Docker 为 OverlayFS 提供两种存储驱动，分别是原始的 `overlay` 和更新更稳定
 的 `overlay2`。
 
 这里将 Linux 内核驱动程序成为 OverlayFS,Docker 存储驱动称为 `overlay` 和 `overlay2`。
@@ -345,3 +345,134 @@ $ cat /var/lib/docker/overlay/ec444863a55a9f1ca2df72223d459c5d940a721b2288ff86a3
 
 使用传统覆盖存储驱动程序可能会导致过多的节点索引（`inode`）消耗，尤其是当 Docker 主机上存在大量镜像和容器时。增加文件系统可用的 `inode` 
 数量的唯一方法是重新格式化它。为避免遇到此问题，强烈建你尽可能使用 `overlay2` 驱动。
+
+# 扩展
+
+- **联合挂载**
+
+联合文件系统这种思想由来已久，这类文件系统会把多个目录（可能对应不同的文件系统）挂载到同一个目录，对外呈现这些目录的联合。1993 年 Werner Almsberger
+实现的 `Inheriting File System` 可以看作是一个开端。但是该项目最后被废弃了，而后其他开发者又为 Linux 社区贡献了 unionfs（2003年）、aufs（2006年）
+和 Union mounts（2004年），但都因种种原因未合入社区。知道 OverlayFS 在 2014 年合入 Linux 主线，才结束了 Linux 主线中无联合文件系统的历史。
+
+这种联合文件系统早起是用在 LiveCD 领域。在一些发行版本中我们可以使用 LiveCD 快速地引导一个系统去初始化或检查磁盘等硬件资源。之所以速度快，是因为
+我们不需要吧 CD 中的信息拷贝到磁盘或内存等可读可写的介质中。只需要把 CD 只读挂载到特定目录，然后再其上附加一层可读可写的文件层，任何导致文件变动
+的修改都会被添加到新的文件层内。这就是写时复制（`copy-on-write`）的概念。
+
+- **写时复制**
+
+写时复制是 Docker Image 之所以如此强大的一个重要原因。写实复制在操作系统领域有很广泛的应用，fork 就是一个景点的例子。当父进程 fork 子进程时，
+内核并没有为子进程分配内存（当然基本的进程控制块、堆栈还是需要的），而是让父子进程共享内存。当两者之一修改共享内存时，会触发一次缺页异常导致真正的
+内存分配。这样做即加速了子进程的创建速度由减少了内存的消耗。
+
+Docker Image 适应写实复制也是为了达到相同的目的：快和节省空间。这里就以 overlayFS 为例介绍写时复制。
+
+OverlayFS 会把一个 "上层" 的目录和 "下层" 的目录结合在一起： "上层" 目录和 "下层" 目录或者组合，或者覆盖，或者一块呈现。当然 "下层" 目录也是
+可以是连个文件系统的挂载点。
+
+在测试以前首选要保证有支持的 OverlayFS 的 Linux 环境（CentOS 默认使用 `OverlayFS` 实现写时复制）。你可以使用如下命令检查环境是否支持，如果
+没有得到如下输出说明不支持，具体你需要自己查阅资料。
+
+```
+$ cat /proc/filesystems | grep overlay
+nodev	overlay
+```
+
+使用上面的命令可确定内核至此 OverlayFS。下面以建楼的形式描述联合文件系统的工作方式，首先需要有混泥土和钢筋等基础原料作为最底层的依赖：
+
+```
+$ mkdir material
+$ echo "bad concrete" > material/concrete
+$ echo "rebar" > material/rebar
+```
+
+但是在建设之前，发现混泥土的质量有问题，所以运来了新的混泥土，同样运来了大理石用作地板砖：
+
+```
+$ mkdir material2
+$ echo "good concrete" > material2/concrete
+$ echo "marble" > material2/marble
+```
+
+现在已经准备好了建筑所需要的所有材料，下面创建 build 目录作为具体施工的层。另外每个 overlayFS 挂载点还要依赖一些必要的目录，包括 `merge`（工作目录）、
+`work`（OverlayFS所必须需要的一个空目录）：
+
+```
+$ mkdir merge work build
+$ ls
+build  material  material2  merge  work
+```
+
+然后挂载 overlayFS，下面的命令指定了 material 目录为最底层，material2 为次底层，build 目录为上层。至此已经完成了建筑所需要的所有依赖：
+
+```
+$ mount -t overlay overlay -olowerdir=material2:material,upperdir=build,workdir=work merge
+```
+
+1. 覆盖
+
+现在，在 merge 目录中可以看到混泥土、钢筋和大理石了。并且混泥土是合格的，也就是说 material2 目录中的 concrete 覆盖了 material 目录的对应
+文件。所以目录所处的层级是很重要的，上层文件会覆盖同名的下层文件；另外现在的文件系统中会保留两份混泥土数据，所以不合理的修改一个大文件会使 image
+的 size 大增：
+
+```
+$ ll */*
+
+-rw-r--r--. 1 root root 14 3月  30 04:15 material2/concrete
+-rw-r--r--. 1 root root  7 3月  30 04:15 material2/marble
+-rw-r--r--. 1 root root 13 3月  30 04:12 material/concrete
+-rw-r--r--. 1 root root  6 3月  30 04:12 material/rebar
+-rw-r--r--. 1 root root 14 3月  30 04:15 merge/concrete
+-rw-r--r--. 1 root root  7 3月  30 04:15 merge/marble
+-rw-r--r--. 1 root root  6 3月  30 04:12 merge/rebar
+
+
+$ cat merge/concrete 
+good concrete
+```
+
+2. 新增
+
+接下来在 merge 目录下建立我们的建筑框架，此时可以看到 frame 文件出现在了 build 目录中：
+
+```
+$ echo "main structure" > merge/frame
+
+
+$ll */*
+
+-rw-r--r--. 1 root root 15 3月  30 04:26 build/frame         # 出现在了 build 目录中
+-rw-r--r--. 1 root root 14 3月  30 04:15 material2/concrete
+-rw-r--r--. 1 root root  7 3月  30 04:15 material2/marble
+-rw-r--r--. 1 root root 13 3月  30 04:12 material/concrete
+-rw-r--r--. 1 root root  6 3月  30 04:12 material/rebar
+-rw-r--r--. 1 root root 14 3月  30 04:15 merge/concrete
+-rw-r--r--. 1 root root 15 3月  30 04:26 merge/frame
+-rw-r--r--. 1 root root  7 3月  30 04:15 merge/marble
+-rw-r--r--. 1 root root  6 3月  30 04:12 merge/rebar
+```
+
+3. 删除
+
+如果此时客户又提出了新的需求，他们不希望使用大理石地板了，那么我们就得在 merge 目录中删掉大理石。可以看到删除底层文件系统中的文件或目录时，会在
+上层建立一个同名的主次设备号都为 0 的字符设备，但并没有真正的直接删掉 marble 文件。所以删除并不一定能减小 image 的大小，并且要注意的是，如果
+制作 image 时使用到了一些关键的信息（用户名、密码等），则需要在同层删除，不然这些信息依然存在于 image 中：
+
+```
+$ rm merge/marble -f
+
+
+$ ll */*
+
+-rw-r--r--. 1 root root   15 3月  30 04:26 build/frame
+c---------. 1 root root 0, 0 3月  30 04:31 build/marble
+-rw-r--r--. 1 root root   14 3月  30 04:15 material2/concrete
+-rw-r--r--. 1 root root    7 3月  30 04:15 material2/marble
+-rw-r--r--. 1 root root   13 3月  30 04:12 material/concrete
+-rw-r--r--. 1 root root    6 3月  30 04:12 material/rebar
+-rw-r--r--. 1 root root   14 3月  30 04:15 merge/concrete
+-rw-r--r--. 1 root root   15 3月  30 04:26 merge/frame
+-rw-r--r--. 1 root root    6 3月  30 04:12 merge/rebar
+```
+
+所以联合文件系统是实现写实复制的基础。现在社区和操作系统厂家都维护着几种文件系统，如 Ubuntu 系统自带的 aufs 支持，Redhat 和 Suse 则采用的是
+devicemapper 方案。一些文件系统如 btrfs 也具备写时复制能力，故也可以作为 Docker 的存储驱动。
