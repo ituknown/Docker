@@ -9,16 +9,16 @@
 Docker 的老版本称为 `docker` 或者 `docker-engine`。如果在系统中已经安装过历史版本需要卸载 ta 以及相关依赖。执行如下命令进行卸载：
 
 ```
-$ sudo yum remove docker \
-                  docker-client \
-                  docker-client-latest \
-                  docker-common \
-                  docker-latest \
-                  docker-latest-logrotate \
-                  docker-logrotate \
-                  docker-selinux \
-                  docker-engine-selinux \
-                  docker-engine
+$ sudo yum remove -y docker \
+                     docker-client \
+                     docker-client-latest \
+                     docker-common \
+                     docker-latest \
+                     docker-latest-logrotate \
+                     docker-logrotate \
+                     docker-selinux \
+                     docker-engine-selinux \
+                     docker-engine
 ```
 
 docker 的相关镜像（`images`）、容器（`containers`）、卷（`volumes`）、网络（`networks`）全部被存储在 `/var/lib/docker` 文件夹下。
