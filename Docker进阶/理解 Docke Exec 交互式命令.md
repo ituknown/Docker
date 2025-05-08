@@ -120,7 +120,7 @@ root@0ab7c5e1a448:/#
 
 这里简单说下，当我们在当前 Shell 环境执行 bash 命令时，其实就是 fork 了一个子进程，如下：
 
-![bash-fork-1638083272OKb1FY](https://ituknown.cn/docker-media/Advanced/DockerExec/bash-fork-1638083272OKb1FY.png)
+![bash-fork-1638083272OKb1FY](https://ituknown.org/docker-media/Advanced/DockerExec/bash-fork-1638083272OKb1FY.png)
 
 之后我们执行的所有命令都是在子进程中执行的，此时的父进程我们可以理解为处于 Sleep 状态，直到我们输入 exit 之后才会返回到父进程。
 
